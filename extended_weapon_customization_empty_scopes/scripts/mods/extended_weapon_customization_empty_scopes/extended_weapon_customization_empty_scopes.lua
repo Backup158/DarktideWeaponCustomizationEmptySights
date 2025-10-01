@@ -27,6 +27,7 @@ local _item_empty_trinket = _item.."/trinkets/unused_trinket"
 -- List of weapons from game code
 local WeaponTemplates = require("scripts/settings/equipment/weapon_templates/weapon_templates")
 
+-- Table to fill out for base mod
 local extended_weapon_customization_plugin = {
     attachments = {
 
@@ -35,71 +36,7 @@ local extended_weapon_customization_plugin = {
 
     },
     kitbashs = {
-        [_item_ranged.."/sights/reflex_sight_01_empty"] = {
-            attachments = {
-                sight = {
-                    item = _item_ranged.."/sights/reflex_sight_01",
-                    fix = {
-                        disable_in_ui = true,
-                        hide = {
-                            --node = 1, -- hides whole scope
-                            -- node = {2, 3, 4,5,6,7,8,9,10,11,12,13,14,15} -- doesn't hit reticle
 
-                            mesh = 1,
-                            --mesh = 2,
-                            --mesh = 3,
-                            --mesh = 4,
-                            --mesh = 5,
-                            
-                            --mesh = {1},
-                            --mesh = "1",
-                        },
-                    },
-                    children = {},
-                },
-            },
-            display_name = "loc_empty_sight_01",
-            description = "loc_description_empty_sight_01",
-            attach_node = "ap_sight_01",
-            dev_name = "loc_empty_sight_01",
-        },
-        --[[
-        [_item_ranged.."/sights/reflex_sight_02_empty"] = {
-            attachments = {
-                sight = {
-                    item = _item_ranged.."/sights/reflex_sight_02",
-                    fix = {
-                        disable_in_ui = true,
-                        hide = {
-                            mesh = {1, 2},
-                        },
-                    },
-                    children = {},
-                },
-            },
-            display_name = "loc_empty_sight_02",
-            description = "loc_description_empty_sight_02",
-            attach_node = "ap_sight_01",
-            dev_name = "loc_empty_sight_02",
-        },
-        [_item_ranged.."/sights/reflex_sight_03_empty"] = {
-            attachments = {
-                sight = {
-                    item = _item_ranged.."/sights/reflex_sight_03",
-                    fix = {
-                        disable_in_ui = true,
-                        hide = {
-                            mesh = {1, 2},
-                        },
-                    },
-                    children = {},
-                },
-            },
-            display_name = "loc_empty_sight_03",
-            description = "loc_description_empty_sight_03",
-            attach_node = "ap_sight_01",
-            dev_name = "loc_empty_sight_03",
-        },]]
     },
 }
 
@@ -209,6 +146,38 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             icon_render_camera_position_offset = {.035, -.1, .175},
         },]]
     }
+end
+
+for i = 1, 3 do
+    local internal_name = "reflex_sight_0"..i.."_empty"
+    extended_weapon_customization_plugin.kitbashs[_item_ranged.."/sights/"..internal_name] = {
+            attachments = {
+                sight = {
+                    item = _item_ranged.."/sights/reflex_sight_0"..i,
+                    fix = {
+                        disable_in_ui = true,
+                        hide = {
+                            --node = 1, -- hides whole scope
+                            -- node = {2, 3, 4,5,6,7,8,9,10,11,12,13,14,15} -- doesn't hit reticle
+
+                            mesh = 1,
+                            --mesh = 2,
+                            --mesh = 3,
+                            --mesh = 4,
+                            --mesh = 5,
+                            
+                            --mesh = {1},
+                            --mesh = "1",
+                        },
+                    },
+                    children = {},
+                },
+            },
+            display_name = "loc_"..internal_name,
+            description = "loc_description_"..internal_name,
+            attach_node = "ap_sight_01",
+            dev_name = internal_name,
+        },
 end
 
 -- ################################
