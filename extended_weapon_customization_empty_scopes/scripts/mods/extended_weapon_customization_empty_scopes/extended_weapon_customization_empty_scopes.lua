@@ -20,6 +20,19 @@ local _item_melee = _item.."/melee"
 local _item_empty_trinket = _item.."/trinkets/unused_trinket"
 
 -- ######
+-- Print if Debug
+-- DESCRIPTION: Logs text in console if debug is on
+-- PARAMETERS:
+--  message: string
+-- RETURN: N/A
+-- ######
+local function info_if_debug(message)
+    if mod:get("debug_mode") then
+        mod:info(tostring(message))
+    end
+end
+
+-- ######
 -- Copy Attachments from A to B
 -- DESCRIPTION: Copies table of attachments from one weapon to another
 -- PARAMETERS: 
