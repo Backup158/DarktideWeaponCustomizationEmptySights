@@ -42,15 +42,15 @@ end
 -- ######
 local function copy_attachments_from_A_to_B(weapon_id_A, weapon_id_B)
     -- If source does not exist
-    if not attachments_table_for_ewc.attachments[weapon_id_A] then
+    if not extended_weapon_customization_plugin.attachments[weapon_id_A] then
         mod:error("No attachments found for "..weapon_id_A)
         return
     end
     -- If destination doesn't exist
-    if not attachments_table_for_ewc.attachments[weapon_id_B] then
-        attachments_table_for_ewc.attachments[weapon_id_B] = {}
+    if not extended_weapon_customization_plugin.attachments[weapon_id_B] then
+        extended_weapon_customization_plugin.attachments[weapon_id_B] = {}
     end
-    table_merge_recursive(attachments_table_for_ewc.attachments[weapon_id_B], attachments_table_for_ewc.attachments[weapon_id_A])
+    table_merge_recursive(extended_weapon_customization_plugin.attachments[weapon_id_B], extended_weapon_customization_plugin.attachments[weapon_id_A])
 
 end
 
@@ -188,10 +188,10 @@ end
 copy_attachments_from_A_to_B("autogun_p1_m1", "autogun_p2_m1")
 copy_attachments_from_A_to_B("autogun_p1_m1", "autogun_p3_m1")
 
-info_if_debug("Going through attachments_table_for_ewc...")
+info_if_debug("Going through extended_weapon_customization_plugin...")
 local siblings_to_add = {}
 -- See which weapons may need to copy over to siblings
-for weapon_id, _ in pairs(attachments_table_for_ewc.attachments) do
+for weapon_id, _ in pairs(extended_weapon_customization_plugin.attachments) do
     -- If first mark of pattern, copy to the siblings
     --  Check last two characters of the name
     --  if mark 1, copy to mk 2 and 3
