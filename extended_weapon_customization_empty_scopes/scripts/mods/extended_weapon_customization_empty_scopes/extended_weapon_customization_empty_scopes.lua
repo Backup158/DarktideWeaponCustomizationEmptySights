@@ -40,6 +40,8 @@ local extended_weapon_customization_plugin = {
     },
 }
 
+local empty_reflexes = {"reflex_sight_01_empty|reflex_sight_02_empty|reflex_sight_03_empty"}
+
 -- ####################################################################################################################
 -- #####  Helper Functions   ##########################################################################################
 -- ####################################################################################################################
@@ -148,6 +150,33 @@ end
 for i = 1, 3 do
     local internal_name = "reflex_sight_0"..i.."_empty"
     extended_weapon_customization_plugin.kitbashs[_item_ranged.."/sights/"..internal_name] = {
+        is_fallback_item = false,
+        show_in_1p = true,
+        base_unit = _item_ranged.."/sights/reflex_sight_0"..i,
+        item_list_faction = "Player",
+        tags = {
+        },
+        only_show_in_1p = false,
+        feature_flags = {
+            "FEATURE_item_retained",
+        },
+        attach_node = ap_sight_01,
+        resource_dependencies = {
+            [given_base_unit] = true,
+        },
+        attachments = {
+            zzz_shared_material_overrides = {
+                item = "",
+                children = {},
+            },
+        },
+        workflow_checklist = {
+        },
+        display_name = internal_name,
+        name = replacement_name,
+        workflow_state = "RELEASABLE",
+        is_full_item = true
+        --[[
         attachments = {
             sight = {
                 item = _item_ranged.."/sights/reflex_sight_0"..i,
@@ -174,6 +203,7 @@ for i = 1, 3 do
         description = "loc_description_"..internal_name,
         attach_node = "ap_sight_01",
         dev_name = internal_name,
+        ]]
     }
 end
 
