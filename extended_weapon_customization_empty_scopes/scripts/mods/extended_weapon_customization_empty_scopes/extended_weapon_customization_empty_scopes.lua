@@ -128,24 +128,14 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
         extended_weapon_customization_plugin.attachments[weapon_id] = {}
     end
 
-    extended_weapon_customization_plugin.attachments[weapon_id].sight = {
-        reflex_sight_01_empty = {
-            replacement_path = _item_ranged.."/sights/reflex_sight_01_empty",
+    extended_weapon_customization_plugin.attachments[weapon_id].sight = { }
+    for i = 1, 3 do
+        extended_weapon_customization_plugin.attachments[weapon_id].sight["reflex_sight_0"..i.."_empty"] = {
+            replacement_path = _item_ranged.."/sights/reflex_sight_0"..i.."_empty",
             icon_render_unit_rotation_offset = {90, 0, -95},
             icon_render_camera_position_offset = {.035, -.1, .175},
         },
-        --[[
-        reflex_sight_02_empty = {
-            replacement_path = _item_ranged.."/sights/reflex_sight_02_empty",
-            icon_render_unit_rotation_offset = {90, 0, -95},
-            icon_render_camera_position_offset = {.035, -.1, .175},
-        },
-        reflex_sight_03_empty = {
-            replacement_path = _item_ranged.."/sights/reflex_sight_03_empty",
-            icon_render_unit_rotation_offset = {90, 0, -95},
-            icon_render_camera_position_offset = {.035, -.1, .175},
-        },]]
-    }
+    end
 end
 
 for i = 1, 3 do
