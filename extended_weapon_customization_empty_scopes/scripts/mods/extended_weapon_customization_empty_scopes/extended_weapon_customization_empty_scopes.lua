@@ -9,7 +9,7 @@ local type = type
 local table = table
 local vector3_box = Vector3Box
 local table_clone = table.clone
-local table_merge_recursive = table.table_merge_recursive
+local table_merge_recursive = table.merge_recursive
 local table_insert = table.insert
 
 
