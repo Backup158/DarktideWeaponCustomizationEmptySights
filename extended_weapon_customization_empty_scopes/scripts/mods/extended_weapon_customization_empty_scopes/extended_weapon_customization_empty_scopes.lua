@@ -197,7 +197,7 @@ for i = 1, 3 do
         workflow_checklist = {
         },
         display_name = "loc_"..internal_name,
-        name = internal_name,
+        name = _item_ranged.."/sights/"..internal_name,
         workflow_state = "RELEASABLE",
         is_full_item = true
         --[[
