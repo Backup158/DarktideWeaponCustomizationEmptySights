@@ -15,7 +15,6 @@ local string = string
 local string_sub = string.sub
 local string_gsub = string.gsub
 
-
 -- ##### ┌┬┐┌─┐┌┬┐┌─┐ #################################################################################################
 -- #####  ││├─┤ │ ├─┤ #################################################################################################
 -- ##### ─┴┘┴ ┴ ┴ ┴ ┴ #################################################################################################
@@ -24,6 +23,9 @@ local _item = "content/items/weapons/player"
 local _item_ranged = _item.."/ranged"
 local _item_melee = _item.."/melee"
 local _item_empty_trinket = _item.."/trinkets/unused_trinket"
+
+-- List of weapons from game code
+local WeaponTemplates = require("scripts/settings/equipment/weapon_templates/weapon_templates")
 
 local extended_weapon_customization_plugin = {
     attachments = {
@@ -115,6 +117,24 @@ local extended_weapon_customization_plugin = {
 local function info_if_debug(message)
     if mod:get("debug_mode") then
         mod:info(tostring(message))
+    end
+end
+
+-- ######
+-- String is key in table?
+-- RETURN: boolean; was the key found?
+-- ######
+local function string_is_key_in_table(string_to_find, table_to_search)
+    if table_to_search[string_to_find] then
+        return true
+    else
+        -- Checks if key is in table but is just has nil value
+        for key, _ in pairs(table_to_search) do
+            if string_to_find == key then
+                return true
+            end
+        end
+        return false
     end
 end
 
