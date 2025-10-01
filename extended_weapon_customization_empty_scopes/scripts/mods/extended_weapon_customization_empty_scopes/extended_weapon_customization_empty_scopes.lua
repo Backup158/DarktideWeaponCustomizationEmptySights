@@ -22,66 +22,6 @@ local _item_ranged = _item.."/ranged"
 local _item_melee = _item.."/melee"
 local _item_empty_trinket = _item.."/trinkets/unused_trinket"
 
--- ######
--- Print if Debug
--- DESCRIPTION: Logs text in console if debug is on
--- PARAMETERS:
---  message: string
--- RETURN: N/A
--- ######
-local function info_if_debug(message)
-    if mod:get("debug_mode") then
-        mod:info(tostring(message))
-    end
-end
-
--- ######
--- Copy Attachments from A to B
--- DESCRIPTION: Copies table of attachments from one weapon to another
--- PARAMETERS: 
---  weapon_id_A: string; the source
---  weapon_id_B: string; the destination
--- RETURN: N/A
--- ######
-local function copy_attachments_from_A_to_B(weapon_id_A, weapon_id_B)
-    -- If source does not exist
-    if not extended_weapon_customization_plugin.attachments[weapon_id_A] then
-        mod:error("No attachments found for "..weapon_id_A)
-        return
-    end
-    -- If destination doesn't exist
-    if not extended_weapon_customization_plugin.attachments[weapon_id_B] then
-        extended_weapon_customization_plugin.attachments[weapon_id_B] = {}
-    end
-    table_merge_recursive(extended_weapon_customization_plugin.attachments[weapon_id_B], extended_weapon_customization_plugin.attachments[weapon_id_A])
-
-end
-
--- ######
--- Copy Attachments to Siblings
--- DESCRIPTION: Given the first mark of a weapon, copy attachments to marks 2 and 3, if they exist
--- PARAMETERS: 
---  first_mark_id: string
--- RETURN: N/A
--- ######
-local function copy_attachments_to_siblings(first_mark_id)
-    if not type(first_mark_id) == "string" then
-        mod:error("uwu first_mark_id is not a string")
-        return
-    end
-    info_if_debug("\tCopying attachments to siblings of "..first_mark_id)
-    -- from 2 to 3
-    for i = 2, 3 do
-        local weapon_id = string_gsub(first_mark_id, "1$", tostring(i))
-        if string_is_key_in_table(weapon_id, WeaponTemplates) then
-            info_if_debug("\t\tuwu Copying to sibling: "..first_mark_id.." --> "..weapon_id)
-            copy_attachments_from_A_to_B(first_mark_id, weapon_id)
-        else
-            info_if_debug("\t\tuwu This is not a real weapon: "..weapon_id)
-        end
-    end
-end
-
 local extended_weapon_customization_plugin = {
     attachments = {
 
@@ -157,6 +97,70 @@ local extended_weapon_customization_plugin = {
         },]]
     },
 }
+
+-- #####              #################################################################################################
+-- #####  Functions   #################################################################################################
+-- #####              #################################################################################################
+
+-- ######
+-- Print if Debug
+-- DESCRIPTION: Logs text in console if debug is on
+-- PARAMETERS:
+--  message: string
+-- RETURN: N/A
+-- ######
+local function info_if_debug(message)
+    if mod:get("debug_mode") then
+        mod:info(tostring(message))
+    end
+end
+
+-- ######
+-- Copy Attachments from A to B
+-- DESCRIPTION: Copies table of attachments from one weapon to another
+-- PARAMETERS: 
+--  weapon_id_A: string; the source
+--  weapon_id_B: string; the destination
+-- RETURN: N/A
+-- ######
+local function copy_attachments_from_A_to_B(weapon_id_A, weapon_id_B)
+    -- If source does not exist
+    if not extended_weapon_customization_plugin.attachments[weapon_id_A] then
+        mod:error("No attachments found for "..weapon_id_A)
+        return
+    end
+    -- If destination doesn't exist
+    if not extended_weapon_customization_plugin.attachments[weapon_id_B] then
+        extended_weapon_customization_plugin.attachments[weapon_id_B] = {}
+    end
+    table_merge_recursive(extended_weapon_customization_plugin.attachments[weapon_id_B], extended_weapon_customization_plugin.attachments[weapon_id_A])
+
+end
+
+-- ######
+-- Copy Attachments to Siblings
+-- DESCRIPTION: Given the first mark of a weapon, copy attachments to marks 2 and 3, if they exist
+-- PARAMETERS: 
+--  first_mark_id: string
+-- RETURN: N/A
+-- ######
+local function copy_attachments_to_siblings(first_mark_id)
+    if not type(first_mark_id) == "string" then
+        mod:error("uwu first_mark_id is not a string")
+        return
+    end
+    info_if_debug("\tCopying attachments to siblings of "..first_mark_id)
+    -- from 2 to 3
+    for i = 2, 3 do
+        local weapon_id = string_gsub(first_mark_id, "1$", tostring(i))
+        if string_is_key_in_table(weapon_id, WeaponTemplates) then
+            info_if_debug("\t\tuwu Copying to sibling: "..first_mark_id.." --> "..weapon_id)
+            copy_attachments_from_A_to_B(first_mark_id, weapon_id)
+        else
+            info_if_debug("\t\tuwu This is not a real weapon: "..weapon_id)
+        end
+    end
+end
 
 local weapons_to_add_to = { "autogun_p1_m1" }
 for _, weapon_id in ipairs(weapons_to_add_to) do
