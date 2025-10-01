@@ -172,11 +172,14 @@ table_insert(extended_weapon_customization_plugin.fixes,
 )]]
 
 for i = 1, 3 do
+    local base_item_path = _item_ranged.."/sights/reflex_sight_0"..i
     local internal_name = "reflex_sight_0"..i.."_empty"
-    extended_weapon_customization_plugin.kitbashs[_item_ranged.."/sights/"..internal_name] = {
+    local replacement_path = _item_ranged.."/sights/"..internal_name
+    
+    extended_weapon_customization_plugin.kitbashs[replacement_path] = {
         is_fallback_item = false,
         show_in_1p = true,
-        base_unit = _item_ranged.."/sights/reflex_sight_0"..i,
+        base_unit = base_item_path,
         item_list_faction = "Player",
         tags = {
         },
@@ -186,7 +189,7 @@ for i = 1, 3 do
         },
         attach_node = ap_sight_01,
         resource_dependencies = {
-            [_item_ranged.."/sights/reflex_sight_0"..i] = true,
+            [base_item_path] = true,
         },
         attachments = {
             zzz_shared_material_overrides = {
@@ -197,7 +200,7 @@ for i = 1, 3 do
         workflow_checklist = {
         },
         display_name = "loc_"..internal_name,
-        name = _item_ranged.."/sights/"..internal_name,
+        name = replacement_path,
         workflow_state = "RELEASABLE",
         is_full_item = true
         --[[
