@@ -3,11 +3,14 @@ local mod = get_mod("extended_weapon_customization_empty_scopes")
 -- ##### ┌─┐┌─┐┬─┐┌─┐┌─┐┬─┐┌┬┐┌─┐┌┐┌┌─┐┌─┐ ############################################################################
 -- ##### ├─┘├┤ ├┬┘├┤ │ │├┬┘│││├─┤││││  ├┤  ############################################################################
 -- ##### ┴  └─┘┴└─└  └─┘┴└─┴ ┴┴ ┴┘└┘└─┘└─┘ ############################################################################
-    -- local unit = Unit
-    local pairs = pairs
-    local table = table
-    local vector3_box = Vector3Box
-    local table_clone = table.clone
+-- local unit = Unit
+local pairs = pairs
+local type = type
+local table = table
+local vector3_box = Vector3Box
+local table_clone = table.clone
+local table_merge_recursive = table_merge_recursive
+local table_insert = table.insert
 
 
 -- ##### ┌┬┐┌─┐┌┬┐┌─┐ #################################################################################################
