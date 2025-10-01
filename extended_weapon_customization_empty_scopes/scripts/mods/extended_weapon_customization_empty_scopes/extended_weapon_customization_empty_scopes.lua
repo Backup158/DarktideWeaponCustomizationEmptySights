@@ -13,6 +13,7 @@ local table_merge_recursive = table.merge_recursive
 local table_insert = table.insert
 local string = string
 local string_sub = string.sub
+local string_gsub = string.gsub
 
 
 -- ##### ┌┬┐┌─┐┌┬┐┌─┐ #################################################################################################
@@ -42,7 +43,7 @@ local extended_weapon_customization_plugin = {
                             --node = 1, -- hides whole scope
                             -- node = {2, 3, 4,5,6,7,8,9,10,11,12,13,14,15} -- doesn't hit reticle
 
-                            --mesh = 1,
+                            mesh = 1,
                             --mesh = 2,
                             --mesh = 3,
                             --mesh = 4,
