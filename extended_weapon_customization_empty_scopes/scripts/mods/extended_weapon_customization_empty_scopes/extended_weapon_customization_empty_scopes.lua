@@ -11,6 +11,8 @@ local vector3_box = Vector3Box
 local table_clone = table.clone
 local table_merge_recursive = table.merge_recursive
 local table_insert = table.insert
+local string = string
+local string_sub = string.sub
 
 
 -- ##### ┌┬┐┌─┐┌┬┐┌─┐ #################################################################################################
