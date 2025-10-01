@@ -3,15 +3,12 @@ local mod = get_mod("extended_weapon_customization_empty_scopes")
 -- ##### ┌─┐┌─┐┬─┐┌─┐┌─┐┬─┐┌┬┐┌─┐┌┐┌┌─┐┌─┐ ############################################################################
 -- ##### ├─┘├┤ ├┬┘├┤ │ │├┬┘│││├─┤││││  ├┤  ############################################################################
 -- ##### ┴  └─┘┴└─└  └─┘┴└─┴ ┴┴ ┴┘└┘└─┘└─┘ ############################################################################
--- #region Performance
     -- local unit = Unit
     local pairs = pairs
     local table = table
     local vector3_box = Vector3Box
     local table_clone = table.clone
---#endregion
 
-local master_items = mod:original_require("scripts/backend/master_items")
 
 -- ##### ┌┬┐┌─┐┌┬┐┌─┐ #################################################################################################
 -- #####  ││├─┤ │ ├─┤ #################################################################################################
@@ -21,6 +18,53 @@ local _item = "content/items/weapons/player"
 local _item_ranged = _item.."/ranged"
 local _item_melee = _item.."/melee"
 local _item_empty_trinket = _item.."/trinkets/unused_trinket"
+
+-- ######
+-- Copy Attachments from A to B
+-- DESCRIPTION: Copies table of attachments from one weapon to another
+-- PARAMETERS: 
+--  weapon_id_A: string; the source
+--  weapon_id_B: string; the destination
+-- RETURN: N/A
+-- ######
+local function copy_attachments_from_A_to_B(weapon_id_A, weapon_id_B)
+    -- If source does not exist
+    if not attachments_table_for_ewc.attachments[weapon_id_A] then
+        mod:error("No attachments found for "..weapon_id_A)
+        return
+    end
+    -- If destination doesn't exist
+    if not attachments_table_for_ewc.attachments[weapon_id_B] then
+        attachments_table_for_ewc.attachments[weapon_id_B] = {}
+    end
+    table_merge_recursive(attachments_table_for_ewc.attachments[weapon_id_B], attachments_table_for_ewc.attachments[weapon_id_A])
+
+end
+
+-- ######
+-- Copy Attachments to Siblings
+-- DESCRIPTION: Given the first mark of a weapon, copy attachments to marks 2 and 3, if they exist
+-- PARAMETERS: 
+--  first_mark_id: string
+-- RETURN: N/A
+-- ######
+local function copy_attachments_to_siblings(first_mark_id)
+    if not type(first_mark_id) == "string" then
+        mod:error("uwu first_mark_id is not a string")
+        return
+    end
+    info_if_debug("\tCopying attachments to siblings of "..first_mark_id)
+    -- from 2 to 3
+    for i = 2, 3 do
+        local weapon_id = string_gsub(first_mark_id, "1$", tostring(i))
+        if string_is_key_in_table(weapon_id, WeaponTemplates) then
+            info_if_debug("\t\tuwu Copying to sibling: "..first_mark_id.." --> "..weapon_id)
+            copy_attachments_from_A_to_B(first_mark_id, weapon_id)
+        else
+            info_if_debug("\t\tuwu This is not a real weapon: "..weapon_id)
+        end
+    end
+end
 
 local extended_weapon_customization_plugin = {
     attachments = {
@@ -37,7 +81,17 @@ local extended_weapon_customization_plugin = {
                     fix = {
                         disable_in_ui = true,
                         hide = {
-                            mesh = {1, 2},
+                            --node = 1, -- hides whole scope
+                            -- node = {2, 3, 4,5,6,7,8,9,10,11,12,13,14,15} -- doesn't hit reticle
+
+                            --mesh = 1,
+                            --mesh = 2,
+                            --mesh = 3,
+                            --mesh = 4,
+                            --mesh = 5,
+                            
+                            --mesh = {1},
+                            --mesh = "1",
                         },
                     },
                     children = {},
@@ -48,6 +102,7 @@ local extended_weapon_customization_plugin = {
             attach_node = "ap_sight_01",
             dev_name = "loc_empty_sight_01",
         },
+        --[[
         [_item_ranged.."/sights/reflex_sight_02_empty"] = {
             attachments = {
                 sight = {
@@ -83,7 +138,7 @@ local extended_weapon_customization_plugin = {
             description = "loc_description_empty_sight_03",
             attach_node = "ap_sight_01",
             dev_name = "loc_empty_sight_03",
-        },
+        },]]
     },
 }
 
@@ -99,6 +154,7 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             icon_render_unit_rotation_offset = {90, 0, -95},
             icon_render_camera_position_offset = {.035, -.1, .175},
         },
+        --[[
         reflex_sight_02_empty = {
             replacement_path = _item_ranged.."/sights/reflex_sight_02_empty",
             icon_render_unit_rotation_offset = {90, 0, -95},
@@ -108,8 +164,38 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             replacement_path = _item_ranged.."/sights/reflex_sight_03_empty",
             icon_render_unit_rotation_offset = {90, 0, -95},
             icon_render_camera_position_offset = {.035, -.1, .175},
-        },
+        },]]
     }
+end
+
+-- ################################
+-- Copying to Different Marks
+-- ################################
+-- Autoguns: Propagate Infantry autogun attachments to Braced and Vigilant
+copy_attachments_from_A_to_B("autogun_p1_m1", "autogun_p2_m1")
+copy_attachments_from_A_to_B("autogun_p1_m1", "autogun_p3_m1")
+
+info_if_debug("Going through attachments_table_for_ewc...")
+local siblings_to_add = {}
+-- See which weapons may need to copy over to siblings
+for weapon_id, _ in pairs(attachments_table_for_ewc.attachments) do
+    -- If first mark of pattern, copy to the siblings
+    --  Check last two characters of the name
+    --  if mark 1, copy to mk 2 and 3
+    --      if they exist (checks for this are handled in that function)
+    info_if_debug("\tChecking "..weapon_id)
+    if (string_sub(weapon_id, -2) == "m1") then
+        table_insert(siblings_to_add, weapon_id)
+    else
+        mod:error("uwu [REPORT TO MOD AUTHOR] not the first mark: "..weapon_id)
+    end
+end
+-- copies to siblings
+--  Done this way because pairs() does NOT guarantee order
+--  and since I'm adding to the table i'm reading, it can lead to duplicates and shuffling order
+--  so somehow things can get skipped? this happened to ilas for some reason
+for _, weapon_id in ipairs(siblings_to_add) do
+    copy_attachments_to_siblings(weapon_id)
 end
 
 mod.extended_weapon_customization_plugin = extended_weapon_customization_plugin
