@@ -128,7 +128,7 @@ end
 -- #####  Adding Attachments   ########################################################################################
 -- ####################################################################################################################
 
-local weapons_to_add_to = { "autogun_p1_m1" }
+local weapons_to_add_to = { "autogun_p1_m1", "bolter_p1_m1", "boltpistol_p1_m1" }
 for _, weapon_id in ipairs(weapons_to_add_to) do
     if not extended_weapon_customization_plugin.attachments[weapon_id] then
         extended_weapon_customization_plugin.attachments[weapon_id] = {}
@@ -146,6 +146,30 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
         }
     end
 end
+--[[
+-- init fixes
+if not extended_weapon_customization_plugin.fixes then
+    extended_weapon_customization_plugin.fixes = {}
+end
+table_insert(extended_weapon_customization_plugin.fixes, 
+    {attachment_slot = "sight",
+        requirements = {
+            sight = {
+                has = empty_reflexes,
+            },
+        },
+        fix = {
+            hide = {
+                mesh = 1,
+            },
+            offset = {
+                position = vector3_box(0, 0.03, 0),
+                rotation = vector3_box(0, 0, 0),
+                scale = vector3_box(1, 1, 1),
+            },
+        },
+    }
+)]]
 
 for i = 1, 3 do
     local internal_name = "reflex_sight_0"..i.."_empty"
@@ -162,7 +186,7 @@ for i = 1, 3 do
         },
         attach_node = ap_sight_01,
         resource_dependencies = {
-            [given_base_unit] = true,
+            [_item_ranged.."/sights/reflex_sight_0"..i] = true,
         },
         attachments = {
             zzz_shared_material_overrides = {
@@ -172,8 +196,8 @@ for i = 1, 3 do
         },
         workflow_checklist = {
         },
-        display_name = internal_name,
-        name = replacement_name,
+        display_name = "loc_"..internal_name,
+        name = internal_name,
         workflow_state = "RELEASABLE",
         is_full_item = true
         --[[
