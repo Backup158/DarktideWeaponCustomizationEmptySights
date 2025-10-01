@@ -8,5 +8,8 @@ return {
 			mod_localization = "extended_weapon_customization_empty_scopes/scripts/mods/extended_weapon_customization_empty_scopes/extended_weapon_customization_empty_scopes_localization",
 		})
 	end,
+	require = {
+		"extended_weapon_customization",
+	},
 	packages = {},
 }
