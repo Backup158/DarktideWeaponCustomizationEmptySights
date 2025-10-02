@@ -86,7 +86,7 @@ end
 local function copy_attachments_from_A_to_B(weapon_id_A, weapon_id_B)
     -- If source does not exist
     if not extended_weapon_customization_plugin.attachments[weapon_id_A] then
-        mod:error("No attachments found for "..weapon_id_A)
+        mod:error("No attachments found for source: "..weapon_id_A)
         return
     end
     -- If destination doesn't exist
@@ -95,6 +95,22 @@ local function copy_attachments_from_A_to_B(weapon_id_A, weapon_id_B)
     end
     table_merge_recursive(extended_weapon_customization_plugin.attachments[weapon_id_B], extended_weapon_customization_plugin.attachments[weapon_id_A])
 
+end
+
+local function copy_fixes_from_A_to_B(weapon_id_A, weapon_id_B)
+    -- If source does not exist
+    if not extended_weapon_customization_plugin.fixes[weapon_id_A] then
+        mod:error("No fixes found for source: "..weapon_id_A)
+        return
+    end
+    -- If destination doesn't exist
+    if not extended_weapon_customization_plugin.fixes[weapon_id_B] then
+        extended_weapon_customization_plugin.fixes[weapon_id_B] = {}
+    end
+
+    for _, fix in extended_weapon_customization_plugin.fixes[weapon_id_A] do
+        table_insert(extended_weapon_customization_plugin.fixes[weapon_id_B], fix)
+    end
 end
 
 -- ######
@@ -116,6 +132,7 @@ local function copy_attachments_to_siblings(first_mark_id)
         if string_is_key_in_table(weapon_id, WeaponTemplates) then
             info_if_debug("\t\tuwu Copying to sibling: "..first_mark_id.." --> "..weapon_id)
             copy_attachments_from_A_to_B(first_mark_id, weapon_id)
+            copy_fixes_from_A_to_B(first_mark_id, weapon_id)
         else
             info_if_debug("\t\tuwu This is not a real weapon: "..weapon_id)
         end
