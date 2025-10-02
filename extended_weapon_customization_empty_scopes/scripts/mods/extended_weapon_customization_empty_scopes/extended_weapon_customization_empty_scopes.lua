@@ -177,6 +177,7 @@ for i = 1, 3 do
     local replacement_path = _item_ranged.."/sights/"..internal_name
 
     extended_weapon_customization_plugin.kitbashs[replacement_path] = {
+        --[[
         is_fallback_item = false,
         show_in_1p = true,
         base_unit = base_item_path,
@@ -203,12 +204,12 @@ for i = 1, 3 do
         name = replacement_path,
         workflow_state = "RELEASABLE",
         is_full_item = true
-        --[[
+        ]]
         attachments = {
-            sight = {
+            base = {
                 item = base_item_path,
                 fix = {
-                    disable_in_ui = false,
+                    disable_in_ui = true,
                     hide = {
                         --node = 1, -- hides whole scope
                         -- node = {2, 3, 4,5,6,7,8,9,10,11,12,13,14,15} -- doesn't hit reticle
@@ -218,7 +219,7 @@ for i = 1, 3 do
                         --mesh = 3,
                         --mesh = 4,
                         --mesh = 5,
-                        
+                        --mesh = {0, 1}
                         --mesh = {1},
                         --mesh = "1",
                     },
@@ -230,7 +231,7 @@ for i = 1, 3 do
         description = "loc_description_"..internal_name,
         attach_node = "ap_sight_01",
         dev_name = internal_name,
-        ]]
+        
     }
 end
 
