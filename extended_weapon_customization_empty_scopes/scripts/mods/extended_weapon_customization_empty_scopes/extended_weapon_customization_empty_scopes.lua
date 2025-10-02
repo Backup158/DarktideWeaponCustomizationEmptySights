@@ -463,51 +463,13 @@ for i = 1, 3 do
     local replacement_path = _item_ranged.."/sights/"..internal_name
 
     extended_weapon_customization_plugin.kitbashs[replacement_path] = {
-        --[[
-        is_fallback_item = false,
-        show_in_1p = true,
-        base_unit = base_item_path,
-        item_list_faction = "Player",
-        tags = {
-        },
-        only_show_in_1p = false,
-        feature_flags = {
-            "FEATURE_item_retained",
-        },
-        attach_node = ap_sight_01,
-        resource_dependencies = {
-            [base_item_path] = true,
-        },
-        attachments = {
-            zzz_shared_material_overrides = {
-                item = "",
-                children = {},
-            },
-        },
-        workflow_checklist = {
-        },
-        display_name = "loc_"..internal_name,
-        name = replacement_path,
-        workflow_state = "RELEASABLE",
-        is_full_item = true
-        ]]
         attachments = {
             base = {
                 item = base_item_path,
                 fix = {
                     disable_in_ui = false,
                     hide = {
-                        --node = 1, -- hides whole scope
-                        -- node = {2, 3, 4,5,6,7,8,9,10,11,12,13,14,15} -- doesn't hit reticle
-
                         mesh = 1,
-                        --mesh = 2,
-                        --mesh = 3,
-                        --mesh = 4,
-                        --mesh = 5,
-                        --mesh = {0, 1}
-                        --mesh = {1},
-                        --mesh = "1",
                     },
                 },
                 children = {},
@@ -524,10 +486,6 @@ end
 -- ################################
 -- Copying to Different Marks
 -- ################################
--- Autoguns: Propagate Infantry autogun attachments to Braced and Vigilant
---copy_attachments_from_A_to_B("autogun_p1_m1", "autogun_p2_m1")
---copy_attachments_from_A_to_B("autogun_p1_m1", "autogun_p3_m1")
-
 info_if_debug("Going through extended_weapon_customization_plugin...")
 local siblings_to_add = {}
 -- See which weapons may need to copy over to siblings
