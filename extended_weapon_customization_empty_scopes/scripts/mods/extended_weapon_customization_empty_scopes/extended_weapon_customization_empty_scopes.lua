@@ -27,6 +27,8 @@ local _item_empty_trinket = _item.."/trinkets/unused_trinket"
 -- List of weapons from game code
 local WeaponTemplates = require("scripts/settings/equipment/weapon_templates/weapon_templates")
 
+local empty_reflexes = {"reflex_sight_01_empty|reflex_sight_02_empty|reflex_sight_03_empty"}
+
 -- Table to fill out for base mod
 local extended_weapon_customization_plugin = {
     attachments = {
@@ -39,8 +41,6 @@ local extended_weapon_customization_plugin = {
 
     },
 }
-
-local empty_reflexes = {"reflex_sight_01_empty|reflex_sight_02_empty|reflex_sight_03_empty"}
 
 -- ####################################################################################################################
 -- #####  Helper Functions   ##########################################################################################
@@ -128,6 +128,9 @@ end
 -- #####  Adding Attachments   ########################################################################################
 -- ####################################################################################################################
 
+-- ##################
+-- Create Attachment for selection
+-- ##################
 local icon_rot = {90, 0, -95}
 local icon_pos = {.035, -.1, .175}
 
@@ -149,6 +152,10 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
         }
     end
 end
+
+-- ##################
+-- Manual fixes for alignment
+-- ##################
 --[[
 -- init fixes
 if not extended_weapon_customization_plugin.fixes then
@@ -174,6 +181,9 @@ table_insert(extended_weapon_customization_plugin.fixes,
     }
 )]]
 
+-- ##################
+-- Kitbash definition 
+-- ##################
 for i = 1, 3 do
     local base_item_path = _item_ranged.."/sights/reflex_sight_0"..i
     local internal_name = "reflex_sight_0"..i.."_empty"
