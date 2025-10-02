@@ -127,13 +127,28 @@ local function create_alignment_for_sights(table_to_insert_into, vectors_table)
             attachment_slot = "sight_offset",
             requirements = {
                 sight = {
-                    has = "reflex_sight_01_empty|reflex_sight_02_empty",
+                    has = "reflex_sight_01_empty",
                 },
             },
             fix = {
                 offset = {
-                    position = vectors_table.position_for_1_and_2 or vector3_box(0, 0, 0),
-                    rotation = vectors_table.rotation_for_1_and_2 or vector3_box(0, 0, 0),
+                    position = vectors_table.position or vectors_table.position_for_1 or vector3_box(0, 0, 0),
+                    rotation = vectors_table.rotation or vectors_table.rotation_for_1 or vector3_box(0, 0, 0),
+                },
+            },
+        }
+    ) 
+    table_insert(table_to_insert_into, {
+            attachment_slot = "sight_offset",
+            requirements = {
+                sight = {
+                    has = "reflex_sight_02_empty",
+                },
+            },
+            fix = {
+                offset = {
+                    position = vectors_table.position or vectors_table.position_for_2 or vector3_box(0, 0, 0),
+                    rotation = vectors_table.rotation or vectors_table.rotation_for_2 or vector3_box(0, 0, 0),
                 },
             },
         }
@@ -147,8 +162,8 @@ local function create_alignment_for_sights(table_to_insert_into, vectors_table)
             },
             fix = {
                 offset = {
-                    position = vectors_table.position_for_3 or vector3_box(0, 0, 0),
-                    rotation = vectors_table.rotation_for_3 or vector3_box(0, 0, 0),
+                    position = vectors_table.position or vectors_table.position_for_3 or vector3_box(0, 0, 0),
+                    rotation = vectors_table.rotation or vectors_table.rotation_for_3 or vector3_box(0, 0, 0),
                 },
             },
         }
@@ -163,7 +178,7 @@ end
 -- Create Attachment for selection
 -- ##################
 local icon_rot = {90, 0, -95}
-local icon_pos = {.035, -.1, .175}
+local icon_pos = {.035, -0.1, .175}
 
 local weapons_to_add_to = { "autogun_p1_m1", "autogun_p2_m1", "autogun_p3_m1", 
     "autopistol_p1_m1", 
@@ -213,7 +228,7 @@ extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
             receiver = { has = infantry_autogun_receivers },
         },
         fix = {
-            offset = { position = vector3_box(0, 0, -.0085) },
+            offset = { position = vector3_box(0, 0, -0.0085) },
         },
     },
     {
@@ -223,7 +238,7 @@ extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
             receiver = { has = infantry_autogun_receivers },
         },
         fix = {
-            offset = { position = vector3_box(0, 0, -.0075) },
+            offset = { position = vector3_box(0, 0, -0.0075) },
         },
     },
     {
@@ -233,7 +248,7 @@ extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
             receiver = { has = braced_autogun_receivers },
         },
         fix = {
-            offset = { position = vector3_box(0, 0, -.0085) },
+            offset = { position = vector3_box(0, 0, -0.0085) },
         },
     },
     {
@@ -243,7 +258,7 @@ extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
             receiver = { has = braced_autogun_receivers },
         },
         fix = {
-            offset = { position = vector3_box(0, 0, -.0075) },
+            offset = { position = vector3_box(0, 0, -0.0075) },
         },
     },
     {
@@ -253,7 +268,7 @@ extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
             receiver = { has = vigilant_autogun_receivers },
         },
         fix = {
-            offset = { position = vector3_box(0, 0, -.011) },
+            offset = { position = vector3_box(0, 0, -0.011) },
         },
     },
     {
@@ -263,10 +278,164 @@ extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
             receiver = { has = vigilant_autogun_receivers },
         },
         fix = {
-            offset = { position = vector3_box(0, 0, -.0085) },
+            offset = { position = vector3_box(0, 0, -0.0085) },
         },
     },
 }
+extended_weapon_customization_plugin.fixes.autogun_p2_m1 = {
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
+            receiver = { has = infantry_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(-0.07, 0, 0.0085) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_03_empty" },
+            receiver = { has = infantry_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -0.0075) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
+            receiver = { has = braced_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(-0.075, 0, 0.058) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_03_empty" },
+            receiver = { has = braced_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(-0.075, 0, 0.058) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
+            receiver = { has = vigilant_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -0.011) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_03_empty" },
+            receiver = { has = vigilant_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -0.0085) },
+        },
+    },
+}
+table_clone(extended_weapon_customization_plugin.fixes.autogun_p3_m1, extended_weapon_customization_plugin.fixes.autogun_p1_m1)
+--[[
+extended_weapon_customization_plugin.fixes.autogun_p3_m1 = {
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
+            receiver = { has = infantry_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -0.0085) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_03_empty" },
+            receiver = { has = infantry_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -0.0075) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
+            receiver = { has = braced_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -0.0085) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_03_empty" },
+            receiver = { has = braced_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -0.0075) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
+            receiver = { has = vigilant_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -0.011) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_03_empty" },
+            receiver = { has = vigilant_autogun_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -0.0085) },
+        },
+    },
+}
+]]
+create_alignment_for_sights(extended_weapon_customization_plugin.fixes.autopistol_p1_m1, {
+    position = vector3_box(-0.045, -0.05, 0.1175),
+    rotation = vector3_box(-2, 10, -2),
+})
+create_alignment_for_sights(extended_weapon_customization_plugin.fixes.bolter_p1_m1, {
+    position = vector3_box(0, 0, -0.0095),
+})
+create_alignment_for_sights(extended_weapon_customization_plugin.fixes.boltpistol_p1_m1, {
+    position = vector3_box(0, 0, -0.0095),
+})
+create_alignment_for_sights(extended_weapon_customization_plugin.fixes.lasgun_p2_m1, {
+    position_for_1 = vector3_box(0, 0, -0.0235),
+    position_for_2 = vector3_box(0, 0, -0.0235),
+    position_for_3 = vector3_box(0, 0, -0.0235),
+})
+create_alignment_for_sights(extended_weapon_customization_plugin.fixes.lasgun_p3_m1, {
+    position = vector3_box(0, 0, -0.0335),
+})
+--[[
+create_alignment_for_sights(extended_weapon_customization_plugin.fixes.shotgun_p1_m1, {
+    position = vector3_box(0, 0, -0.0335),
+})
+]]
+create_alignment_for_sights(extended_weapon_customization_plugin.fixes.shotgun_p4_m1, {
+    position = vector3_box(-0.09, 0, 0.13),
+    rotation = vector3_box(-6, 0, -5.5),
+})
 
 -- ##################
 -- Kitbash definition 
