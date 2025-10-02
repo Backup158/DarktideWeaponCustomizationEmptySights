@@ -438,8 +438,8 @@ create_alignment_for_sights(extended_weapon_customization_plugin.fixes.boltpisto
 })
 create_alignment_for_sights(extended_weapon_customization_plugin.fixes.lasgun_p2_m1, {
     position_for_1 = vector3_box(0, 0, -0.0235),
-    position_for_2 = vector3_box(0, 0, -0.0235),
-    position_for_3 = vector3_box(0, 0, -0.0235),
+    position_for_2 = vector3_box(0, 0, -0.022),
+    position_for_3 = vector3_box(0, 0, -0.022),
 })
 create_alignment_for_sights(extended_weapon_customization_plugin.fixes.lasgun_p3_m1, {
     position = vector3_box(0, 0, -0.0335),
