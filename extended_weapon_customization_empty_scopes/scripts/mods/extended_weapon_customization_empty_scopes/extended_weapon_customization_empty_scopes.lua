@@ -202,9 +202,10 @@ local weapons_to_add_to = { "autogun_p1_m1", "autogun_p2_m1", "autogun_p3_m1",
     "bolter_p1_m1", "boltpistol_p1_m1", 
     "lasgun_p1_m1", "lasgun_p2_m1", "lasgun_p3_m1", 
     "laspistol_p1_m1", 
-    --"ogryn_heavystubber_p1_m1", "ogryn_heavystubber_p2_m1", 
+    "ogryn_heavystubber_p1_m1", "ogryn_heavystubber_p2_m1", 
     "shotgun_p1_m1", 
     "shotgun_p4_m1",
+    "stubrevolver_p1_m1",
 }
 for _, weapon_id in ipairs(weapons_to_add_to) do
     if not extended_weapon_customization_plugin.attachments[weapon_id] then
@@ -436,6 +437,7 @@ create_alignment_for_sights(extended_weapon_customization_plugin.fixes.bolter_p1
 create_alignment_for_sights(extended_weapon_customization_plugin.fixes.boltpistol_p1_m1, {
     position = vector3_box(0, 0, -0.0095),
 })
+-- Infantry Lasguns don't need alignment
 create_alignment_for_sights(extended_weapon_customization_plugin.fixes.lasgun_p2_m1, {
     position_for_1 = vector3_box(0, 0, -0.0235),
     position_for_2 = vector3_box(0, 0, -0.022),
@@ -444,6 +446,16 @@ create_alignment_for_sights(extended_weapon_customization_plugin.fixes.lasgun_p2
 create_alignment_for_sights(extended_weapon_customization_plugin.fixes.lasgun_p3_m1, {
     position = vector3_box(0, 0.15, -0.0235),
 })
+-- Laspistols don't need alignment
+create_alignment_for_sights(extended_weapon_customization_plugin.fixes.ogryn_heavystubber_p1_m1, {
+    position = vector3_box(-0.28, -0.5, 0.18),
+    rotation = vector3_box(-2.4, 0, -1.4),
+})
+create_alignment_for_sights(extended_weapon_customization_plugin.fixes.ogryn_heavystubber_p2_m1, {
+    position = vector3_box(0.06, -0.25, 0.25),
+    rotation = vector3_box(-3.1, 0, -2.2),
+})
+-- Combat Shotguns don't need alignment
 --[[
 create_alignment_for_sights(extended_weapon_customization_plugin.fixes.shotgun_p1_m1, {
     position = vector3_box(0, 0, -0.0335),
