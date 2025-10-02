@@ -1,4 +1,5 @@
 local mod = get_mod("extended_weapon_customization_empty_scopes")
+mod.version = "1.0.0"
 
 -- ##### ┌─┐┌─┐┬─┐┌─┐┌─┐┬─┐┌┬┐┌─┐┌┐┌┌─┐┌─┐ ############################################################################
 -- ##### ├─┘├┤ ├┬┘├┤ │ │├┬┘│││├─┤││││  ├┤  ############################################################################
@@ -525,3 +526,31 @@ for _, weapon_id in ipairs(siblings_to_add) do
 end
 
 mod.extended_weapon_customization_plugin = extended_weapon_customization_plugin
+
+-- ####################################################################################################################
+-- #####  Hooks   #####################################################################################################
+-- ####################################################################################################################
+
+function mod.on_all_mods_loaded()
+    mod:info("v"..mod.version.." loaded uwu nya :3")
+
+	-- Checks for installed mods. Kept here so it works after reload.
+	--	Base Mod
+	if not get_mod("extended_weapon_customization") then
+		mod:error("Extended Weapon Customization mod (the rebuild) required")
+		return
+	end
+    --  Outdated base mod
+	if get_mod("weapon_customization") then
+		mod:error("You are using the OLD version of Weapon Customization! This plugin is for the new, rebuilt version.")
+		return
+	end
+	--	Plugins
+	--		Just so I know. Compatibility is only an issue of name collisions
+    if get_mod("extended_weapon_customization_base_additions") then
+    	mod:info("Uwusa haz base additions :3")
+    end
+    if get_mod("extended_weapon_customization_owo") then
+		mod:info("Uwusa haz OwO :3")
+    end
+end
