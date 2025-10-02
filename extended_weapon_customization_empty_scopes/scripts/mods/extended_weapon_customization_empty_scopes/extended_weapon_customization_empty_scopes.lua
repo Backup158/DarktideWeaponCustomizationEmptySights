@@ -190,22 +190,27 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             icon_render_camera_position_offset = icon_pos,
         }
     end
+
+    -- initialize fixes
+    if not extended_weapon_customization_plugin.fixes[weapon_id] then
+        extended_weapon_customization_plugin.fixes[weapon_id] = {}
+    end
 end
 
 -- ##################
 -- Manual fixes for alignment
 -- ##################
 local empty_reflexes = "reflex_sight_01_empty|reflex_sight_02_empty|reflex_sight_03_empty"
-local infantry_receivers = "autogun_rifle_receiver_01|autogun_rifle_receiver_ml01"
-local headhunter_receivers = "autogun_rifle_killshot_receiver_01|autogun_rifle_killshot_receiver_02|autogun_rifle_killshot_receiver_03|autogun_rifle_killshot_receiver_04|autogun_rifle_killshot_receiver_ml01"
-local braced_receivers = "autogun_rifle_ak_receiver_01|autogun_rifle_ak_receiver_02|autogun_rifle_ak_receiver_03|autogun_rifle_ak_receiver_ml01"
+local infantry_autogun_receivers = "autogun_rifle_receiver_01|autogun_rifle_receiver_ml01"
+local vigilant_autogun_receivers = "autogun_rifle_killshot_receiver_01|autogun_rifle_killshot_receiver_02|autogun_rifle_killshot_receiver_03|autogun_rifle_killshot_receiver_04|autogun_rifle_killshot_receiver_ml01"
+local braced_autogun_receivers = "autogun_rifle_ak_receiver_01|autogun_rifle_ak_receiver_02|autogun_rifle_ak_receiver_03|autogun_rifle_ak_receiver_ml01"
 
 extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
     {
         attachment_slot = "sight_offset",
         requirements = {
             sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
-            receiver = { has = infantry_receivers },
+            receiver = { has = infantry_autogun_receivers },
         },
         fix = {
             offset = { position = vector3_box(0, 0, -.0085) },
@@ -215,7 +220,7 @@ extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
         attachment_slot = "sight_offset",
         requirements = {
             sight = { has = "reflex_sight_03_empty" },
-            receiver = { has = infantry_receivers },
+            receiver = { has = infantry_autogun_receivers },
         },
         fix = {
             offset = { position = vector3_box(0, 0, -.0075) },
@@ -225,7 +230,7 @@ extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
         attachment_slot = "sight_offset",
         requirements = {
             sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
-            receiver = { has = braced_receivers },
+            receiver = { has = braced_autogun_receivers },
         },
         fix = {
             offset = { position = vector3_box(0, 0, -.0085) },
@@ -235,7 +240,7 @@ extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
         attachment_slot = "sight_offset",
         requirements = {
             sight = { has = "reflex_sight_03_empty" },
-            receiver = { has = braced_receivers },
+            receiver = { has = braced_autogun_receivers },
         },
         fix = {
             offset = { position = vector3_box(0, 0, -.0075) },
@@ -245,7 +250,7 @@ extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
         attachment_slot = "sight_offset",
         requirements = {
             sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
-            receiver = { has = headhunter_receivers },
+            receiver = { has = vigilant_autogun_receivers },
         },
         fix = {
             offset = { position = vector3_box(0, 0, -.011) },
@@ -255,7 +260,7 @@ extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
         attachment_slot = "sight_offset",
         requirements = {
             sight = { has = "reflex_sight_03_empty" },
-            receiver = { has = headhunter_receivers },
+            receiver = { has = vigilant_autogun_receivers },
         },
         fix = {
             offset = { position = vector3_box(0, 0, -.0085) },
