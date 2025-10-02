@@ -108,7 +108,7 @@ local function copy_fixes_from_A_to_B(weapon_id_A, weapon_id_B)
         extended_weapon_customization_plugin.fixes[weapon_id_B] = {}
     end
 
-    for _, fix in extended_weapon_customization_plugin.fixes[weapon_id_A] do
+    for _, fix in ipairs(extended_weapon_customization_plugin.fixes[weapon_id_A]) do
         table_insert(extended_weapon_customization_plugin.fixes[weapon_id_B], fix)
     end
 end
