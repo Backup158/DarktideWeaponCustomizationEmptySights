@@ -465,6 +465,9 @@ create_alignment_for_sights(extended_weapon_customization_plugin.fixes.shotgun_p
     position = vector3_box(-0.09, 0, 0.13),
     rotation = vector3_box(-6, 0, -5.5),
 })
+create_alignment_for_sights(extended_weapon_customization_plugin.fixes.stubrevolver_p1_m1, {
+    position = vector3_box(0.00, 0, -0.02),
+})
 
 -- ##################
 -- Kitbash definition 
