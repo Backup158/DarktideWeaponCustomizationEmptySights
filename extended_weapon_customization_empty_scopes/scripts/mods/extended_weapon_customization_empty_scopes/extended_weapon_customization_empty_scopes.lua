@@ -175,7 +175,7 @@ for i = 1, 3 do
     local base_item_path = _item_ranged.."/sights/reflex_sight_0"..i
     local internal_name = "reflex_sight_0"..i.."_empty"
     local replacement_path = _item_ranged.."/sights/"..internal_name
-    
+
     extended_weapon_customization_plugin.kitbashs[replacement_path] = {
         is_fallback_item = false,
         show_in_1p = true,
@@ -206,7 +206,7 @@ for i = 1, 3 do
         --[[
         attachments = {
             sight = {
-                item = _item_ranged.."/sights/reflex_sight_0"..i,
+                item = base_item_path,
                 fix = {
                     disable_in_ui = false,
                     hide = {
