@@ -27,8 +27,6 @@ local _item_empty_trinket = _item.."/trinkets/unused_trinket"
 -- List of weapons from game code
 local WeaponTemplates = require("scripts/settings/equipment/weapon_templates/weapon_templates")
 
-local empty_reflexes = {"reflex_sight_01_empty|reflex_sight_02_empty|reflex_sight_03_empty"}
-
 -- Table to fill out for base mod
 local extended_weapon_customization_plugin = {
     attachments = {
@@ -124,6 +122,39 @@ local function copy_attachments_to_siblings(first_mark_id)
     end
 end
 
+local function create_alignment_for_sights(table_to_insert_into, vectors_table)
+    table_insert(table_to_insert_into, {
+            attachment_slot = "sight_offset",
+            requirements = {
+                sight = {
+                    has = "reflex_sight_01_empty|reflex_sight_02_empty",
+                },
+            },
+            fix = {
+                offset = {
+                    position = vectors_table.position_for_1_and_2 or vector3_box(0, 0, 0),
+                    rotation = vectors_table.rotation_for_1_and_2 or vector3_box(0, 0, 0),
+                },
+            },
+        }
+    ) 
+    table_insert(table_to_insert_into, {
+            attachment_slot = "sight_offset",
+            requirements = {
+                sight = {
+                    has = "reflex_sight_03_empty",
+                },
+            },
+            fix = {
+                offset = {
+                    position = vectors_table.position_for_3 or vector3_box(0, 0, 0),
+                    rotation = vectors_table.rotation_for_3 or vector3_box(0, 0, 0),
+                },
+            },
+        }
+    ) 
+end
+
 -- ####################################################################################################################
 -- #####  Adding Attachments   ########################################################################################
 -- ####################################################################################################################
@@ -134,7 +165,15 @@ end
 local icon_rot = {90, 0, -95}
 local icon_pos = {.035, -.1, .175}
 
-local weapons_to_add_to = { "autogun_p1_m1", "bolter_p1_m1", "boltpistol_p1_m1" }
+local weapons_to_add_to = { "autogun_p1_m1", "autogun_p2_m1", "autogun_p3_m1", 
+    "autopistol_p1_m1", 
+    "bolter_p1_m1", "boltpistol_p1_m1", 
+    "lasgun_p1_m1", "lasgun_p2_m1", "lasgun_p3_m1", 
+    "laspistol_p1_m1", 
+    --"ogryn_heavystubber_p1_m1", "ogryn_heavystubber_p2_m1", 
+    "shotgun_p1_m1", 
+    "shotgun_p4_m1",
+}
 for _, weapon_id in ipairs(weapons_to_add_to) do
     if not extended_weapon_customization_plugin.attachments[weapon_id] then
         extended_weapon_customization_plugin.attachments[weapon_id] = {}
@@ -156,30 +195,73 @@ end
 -- ##################
 -- Manual fixes for alignment
 -- ##################
---[[
--- init fixes
-if not extended_weapon_customization_plugin.fixes then
-    extended_weapon_customization_plugin.fixes = {}
-end
-table_insert(extended_weapon_customization_plugin.fixes, 
-    {attachment_slot = "sight",
+local empty_reflexes = "reflex_sight_01_empty|reflex_sight_02_empty|reflex_sight_03_empty"
+local infantry_receivers = "autogun_rifle_receiver_01|autogun_rifle_receiver_ml01"
+local headhunter_receivers = "autogun_rifle_killshot_receiver_01|autogun_rifle_killshot_receiver_02|autogun_rifle_killshot_receiver_03|autogun_rifle_killshot_receiver_04|autogun_rifle_killshot_receiver_ml01"
+local braced_receivers = "autogun_rifle_ak_receiver_01|autogun_rifle_ak_receiver_02|autogun_rifle_ak_receiver_03|autogun_rifle_ak_receiver_ml01"
+
+extended_weapon_customization_plugin.fixes.autogun_p1_m1 = {
+    {
+        attachment_slot = "sight_offset",
         requirements = {
-            sight = {
-                has = empty_reflexes,
-            },
+            sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
+            receiver = { has = infantry_receivers },
         },
         fix = {
-            hide = {
-                mesh = 1,
-            },
-            offset = {
-                position = vector3_box(0, 0.03, 0),
-                rotation = vector3_box(0, 0, 0),
-                scale = vector3_box(1, 1, 1),
-            },
+            offset = { position = vector3_box(0, 0, -.0085) },
         },
-    }
-)]]
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_03_empty" },
+            receiver = { has = infantry_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -.0075) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
+            receiver = { has = braced_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -.0085) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_03_empty" },
+            receiver = { has = braced_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -.0075) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_01_empty|reflex_sight_02_empty" },
+            receiver = { has = headhunter_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -.011) },
+        },
+    },
+    {
+        attachment_slot = "sight_offset",
+        requirements = {
+            sight = { has = "reflex_sight_03_empty" },
+            receiver = { has = headhunter_receivers },
+        },
+        fix = {
+            offset = { position = vector3_box(0, 0, -.0085) },
+        },
+    },
+}
 
 -- ##################
 -- Kitbash definition 
@@ -252,8 +334,8 @@ end
 -- Copying to Different Marks
 -- ################################
 -- Autoguns: Propagate Infantry autogun attachments to Braced and Vigilant
-copy_attachments_from_A_to_B("autogun_p1_m1", "autogun_p2_m1")
-copy_attachments_from_A_to_B("autogun_p1_m1", "autogun_p3_m1")
+--copy_attachments_from_A_to_B("autogun_p1_m1", "autogun_p2_m1")
+--copy_attachments_from_A_to_B("autogun_p1_m1", "autogun_p3_m1")
 
 info_if_debug("Going through extended_weapon_customization_plugin...")
 local siblings_to_add = {}
