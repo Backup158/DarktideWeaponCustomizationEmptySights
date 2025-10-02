@@ -128,6 +128,9 @@ end
 -- #####  Adding Attachments   ########################################################################################
 -- ####################################################################################################################
 
+local icon_rot = {90, 0, -95}
+local icon_pos = {.035, -.1, .175}
+
 local weapons_to_add_to = { "autogun_p1_m1", "bolter_p1_m1", "boltpistol_p1_m1" }
 for _, weapon_id in ipairs(weapons_to_add_to) do
     if not extended_weapon_customization_plugin.attachments[weapon_id] then
@@ -141,8 +144,8 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
     for i = 1, 3 do
         extended_weapon_customization_plugin.attachments[weapon_id].sight["reflex_sight_0"..i.."_empty"] = {
             replacement_path = _item_ranged.."/sights/reflex_sight_0"..i.."_empty",
-            icon_render_unit_rotation_offset = {90, 0, -95},
-            icon_render_camera_position_offset = {.035, -.1, .175},
+            icon_render_unit_rotation_offset = icon_rot,
+            icon_render_camera_position_offset = icon_pos,
         }
     end
 end
