@@ -227,8 +227,21 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             icon_render_camera_position_offset = icon_pos,
         }
     end
+    if not extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle then
+        extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle = {}
+    end
     extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle["remove_reticle"] = {
         replacement_path = _item_ranged.."/sight_reticle/remove_reticle",
+        icon_render_unit_rotation_offset = icon_rot,
+        icon_render_camera_position_offset = icon_pos,
+    }
+    extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle["does_nothing_atm"] = {
+        replacement_path = _item_ranged.."/sight_reticle/does_nothing_atm",
+        icon_render_unit_rotation_offset = icon_rot,
+        icon_render_camera_position_offset = icon_pos,
+    }
+    extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle["another_dummy_option"] = {
+        replacement_path = _item_ranged.."/sight_reticle/another_dummy_option",
         icon_render_unit_rotation_offset = icon_rot,
         icon_render_camera_position_offset = icon_pos,
     }
