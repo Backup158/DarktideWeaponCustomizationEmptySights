@@ -284,6 +284,7 @@ end
 for _, internal_name in ipairs(sight_reticles_to_add) do
     local replacement_name = _item_ranged.."/sight_reticles/"..internal_name
     extended_weapon_customization_plugin.kitbashs[replacement_name] = {
+        --[[
         is_fallback_item = false,
         show_in_1p = true,
         base_unit = _item_empty_trinket,
@@ -307,14 +308,11 @@ for _, internal_name in ipairs(sight_reticles_to_add) do
         name = replacement_name,
         workflow_state = "RELEASABLE",
         is_full_item = true
-        
-        --[[
+        ]]
+        --
         attachments = {
             base = {
                 item = _item_empty_trinket,
-                fix = {
-                    disable_in_ui = false,
-                },
                 children = {},
             },
         },
@@ -322,7 +320,7 @@ for _, internal_name in ipairs(sight_reticles_to_add) do
         description = "loc_description_"..internal_name,
         attach_node = "ap_sight_01",
         dev_name = internal_name,
-        ]]
+        
     }
 end
 
