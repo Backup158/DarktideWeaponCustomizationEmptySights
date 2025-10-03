@@ -230,12 +230,12 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
         }
     end
     ]]
-    if not extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle then
-        extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle = {}
+    if not extended_weapon_customization_plugin.attachments[weapon_id].sight_reticles then
+        extended_weapon_customization_plugin.attachments[weapon_id].sight_reticles = {}
     end
     for _, internal_name in ipairs(sight_reticles_to_add) do
-        extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle[internal_name] = {
-            replacement_path = _item_ranged.."/sight_reticle/"..internal_name,
+        extended_weapon_customization_plugin.attachments[weapon_id].sight_reticles[internal_name] = {
+            replacement_path = _item_ranged.."/sight_reticles/"..internal_name,
             icon_render_unit_rotation_offset = icon_rot,
             icon_render_camera_position_offset = icon_pos,
         }
@@ -245,7 +245,7 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
         extended_weapon_customization_plugin.attachment_slots[weapon_id] = {}
     end
     table_insert(extended_weapon_customization_plugin.attachment_slots[weapon_id], {
-        sight_reticle = {
+        sight_reticles = {
             parent_slot = "sight",
             default_path = _item_empty_trinket,
         },
@@ -259,7 +259,7 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
     table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
         attachment_slot = "sight",
         requirements = {
-            sight_reticle = {
+            sight_reticles = {
                 has = "remove_reticle",
             },
             sight = {
@@ -279,7 +279,7 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
 end
 -- kitbash definition
 for _, internal_name in ipairs(sight_reticles_to_add) do
-    extended_weapon_customization_plugin.kitbashs[_item_ranged.."/sight_reticle/"..internal_name] = {
+    extended_weapon_customization_plugin.kitbashs[_item_ranged.."/sight_reticles/"..internal_name] = {
         attachments = {
             base = {
                 item = _item_empty_trinket,
