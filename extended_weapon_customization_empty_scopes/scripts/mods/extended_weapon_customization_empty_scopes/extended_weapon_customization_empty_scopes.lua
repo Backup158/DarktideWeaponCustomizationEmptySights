@@ -515,7 +515,7 @@ table_insert(extended_weapon_customization_plugin.fixes.bolter_p1_m1,
         },
         fix = {
             offset = {
-                position = vector3_box(0, 0.1, -0.01), -- forwards and in the middle
+                position = vector3_box(0, 0.1, -0.01), -- forwards and down into the middle recess
             },
         },
     }
