@@ -370,6 +370,39 @@ extended_weapon_customization_plugin.fixes.autogun_p2_m1 = {
             offset = { position = vector3_box(0, 0, -0.0085) },
         },
     },
+    {
+        attachment_slot = "sight",
+        requirements = {
+            sight = {
+                has = empty_reflexes,
+            },
+            receiver = {
+                has = braced_autogun_receivers,
+            }
+        },
+        fix = {
+            offset = {
+                position = vector3_box(0, -0.025, 0),
+                rotation = vector3_box(0, 0, 0),
+            },
+        },
+    },
+    {attachment_slot = "sight",
+        requirements = {
+            sight = {
+                has = empty_reflexes,
+            },
+            receiver = {
+                has = vigilant_autogun_receivers,
+            }
+        },
+        fix = {
+            offset = {
+                position = vector3_box(0, -.05, 0),
+                rotation = vector3_box(0, 0, 0),
+            },
+        },
+    },
 }
 extended_weapon_customization_plugin.fixes.autogun_p3_m1 = {
     {
