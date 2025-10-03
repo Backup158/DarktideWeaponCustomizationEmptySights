@@ -6,6 +6,10 @@ mod:add_global_localize_strings({
     loc_extended_weapon_customization_empty_scopes = {
         en = "Empty Scopes/Sights",
     },
+	-- Slot Name
+	loc_attachment_slot_sight_reticle = {
+		en = "Sight Reticle",
+	},
 })
 
 return {
