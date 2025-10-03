@@ -505,6 +505,21 @@ create_alignments_for_sights(extended_weapon_customization_plugin.fixes.autopist
 create_alignments_for_sights(extended_weapon_customization_plugin.fixes.bolter_p1_m1, {
     position = vector3_box(0, 0, -0.0095),
 })
+table_insert(extended_weapon_customization_plugin.fixes.bolter_p1_m1, 
+    {   
+        attachment_slot = "sight",
+        requirements = {
+            sight = {
+                has = empty_reflexes,
+            },
+        },
+        fix = {
+            offset = {
+                position = vector3_box(0, 0.1, -0.01), -- forwards and in the middle
+            },
+        },
+    }
+)
 create_alignments_for_sights(extended_weapon_customization_plugin.fixes.boltpistol_p1_m1, {
     position = vector3_box(0, 0, -0.0095),
 })
