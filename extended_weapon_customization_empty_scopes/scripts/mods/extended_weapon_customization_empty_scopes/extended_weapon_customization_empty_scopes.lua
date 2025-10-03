@@ -30,15 +30,10 @@ local WeaponTemplates = require("scripts/settings/equipment/weapon_templates/wea
 
 -- Table to fill out for base mod
 local extended_weapon_customization_plugin = {
-    attachments = {
-
-    },
-    fixes = {
-
-    },
-    kitbashs = {
-
-    },
+    attachments = {},
+    attachment_slots = {},
+    fixes = {},
+    kitbashs = {},
 }
 
 -- ####################################################################################################################
@@ -232,11 +227,46 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             icon_render_camera_position_offset = icon_pos,
         }
     end
+    extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle["remove_reticle"] = {
+        replacement_path = _item_ranged.."/sight_reticle/remove_reticle",
+        icon_render_unit_rotation_offset = icon_rot,
+        icon_render_camera_position_offset = icon_pos,
+    }
+
+    if not extended_weapon_customization_plugin.attachment_slots[weapon_id] then
+        extended_weapon_customization_plugin.attachment_slots[weapon_id] = {}
+    end
+    table_insert(extended_weapon_customization_plugin.attachment_slots[weapon_id], {
+        sight_reticle = {
+            parent_slot = "sight",
+            default_path = _item_empty_trinket,
+        },
+    })
 
     -- initialize fixes
     if not extended_weapon_customization_plugin.fixes[weapon_id] then
         extended_weapon_customization_plugin.fixes[weapon_id] = {}
     end
+    table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
+        attachment_slot = "sight",
+        requirements = {
+            sight_reticle = {
+                has = "remove_reticle",
+            },
+            sight = {
+                has = "reflex_sight_01|reflex_sight_02|reflex_sight_03",
+            },
+        },
+        fix = {
+            disable_in_ui = false,
+            hide = {
+                mesh = 1,
+            },
+            --offset = {
+            --    position = vector3_box(0, 0.1, -0.01), -- forwards and down into the middle recess
+            --},
+        },
+    })
 end
 
 -- ##################
