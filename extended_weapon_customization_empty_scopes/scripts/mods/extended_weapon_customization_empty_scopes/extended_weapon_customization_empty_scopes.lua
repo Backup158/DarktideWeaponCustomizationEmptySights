@@ -211,6 +211,7 @@ local weapons_to_add_to = { "autogun_p1_m1", "autogun_p2_m1", "autogun_p3_m1",
     "shotgun_p4_m1",
     "stubrevolver_p1_m1",
 }
+local sight_reticles_to_add = { "remove_reticle", "does_nothing_atm", "another_dummy_option", }
 for _, weapon_id in ipairs(weapons_to_add_to) do
     if not extended_weapon_customization_plugin.attachments[weapon_id] then
         extended_weapon_customization_plugin.attachments[weapon_id] = {}
@@ -230,21 +231,13 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
     if not extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle then
         extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle = {}
     end
-    extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle["remove_reticle"] = {
-        replacement_path = _item_ranged.."/sight_reticle/remove_reticle",
-        icon_render_unit_rotation_offset = icon_rot,
-        icon_render_camera_position_offset = icon_pos,
-    }
-    extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle["does_nothing_atm"] = {
-        replacement_path = _item_ranged.."/sight_reticle/does_nothing_atm",
-        icon_render_unit_rotation_offset = icon_rot,
-        icon_render_camera_position_offset = icon_pos,
-    }
-    extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle["another_dummy_option"] = {
-        replacement_path = _item_ranged.."/sight_reticle/another_dummy_option",
-        icon_render_unit_rotation_offset = icon_rot,
-        icon_render_camera_position_offset = icon_pos,
-    }
+    for _, internal_name in ipairs(sight_reticles_to_add) do
+        extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle[internal_name] = {
+            replacement_path = _item_ranged.."/sight_reticle/"..internal_name,
+            icon_render_unit_rotation_offset = icon_rot,
+            icon_render_camera_position_offset = icon_pos,
+        }
+    end
 
     if not extended_weapon_customization_plugin.attachment_slots[weapon_id] then
         extended_weapon_customization_plugin.attachment_slots[weapon_id] = {}
@@ -281,6 +274,28 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
         },
     })
 end
+for _, internal_name in ipairs(sight_reticles_to_add) do
+    extended_weapon_customization_plugin.kitbashs[_item_ranged.."/sight_reticle/"..internal_name] = {
+        attachments = {
+            base = {
+                item = _item_empty_trinket,
+                fix = {
+                    disable_in_ui = false,
+                    hide = {
+                        mesh = 1,
+                    },
+                },
+                children = {},
+            },
+        },
+        display_name = "loc_"..internal_name,
+        description = "loc_description_"..internal_name,
+        attach_node = "ap_sight_01",
+        dev_name = internal_name,
+        
+    }
+end
+
 
 -- ##################
 -- Manual fixes for alignment
