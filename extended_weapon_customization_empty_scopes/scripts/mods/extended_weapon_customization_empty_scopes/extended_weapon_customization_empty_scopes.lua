@@ -523,6 +523,21 @@ table_insert(extended_weapon_customization_plugin.fixes.bolter_p1_m1,
 create_alignments_for_sights(extended_weapon_customization_plugin.fixes.boltpistol_p1_m1, {
     position = vector3_box(0, 0, -0.0095),
 })
+table_insert(extended_weapon_customization_plugin.fixes.boltpistol_p1_m1, 
+    {   
+        attachment_slot = "sight",
+        requirements = {
+            sight = {
+                has = empty_reflexes,
+            },
+        },
+        fix = {
+            offset = {
+                position = vector3_box(0, 0.095, -0.013), -- forwards and down into the middle recess
+            },
+        },
+    }
+)
 -- Infantry Lasguns don't need alignment
 create_alignments_for_sights(extended_weapon_customization_plugin.fixes.lasgun_p2_m1, {
     position_for_1 = vector3_box(0, 0, -0.0235),
