@@ -477,7 +477,29 @@ create_alignments_for_sights(extended_weapon_customization_plugin.fixes.shotgun_
 create_alignments_for_sights(extended_weapon_customization_plugin.fixes.stubrevolver_p1_m1, {
     position = vector3_box(0.00, 0, -0.02),
 })
-
+--[[
+table_insert(extended_weapon_customization_plugin.fixes.stubrevolver_p1_m1, {
+    {
+        attachment_slot = "rail",
+        requirements = {
+            sight = {
+                has = empty_reflexes,
+            },
+        },
+        fix = {
+            --attach = {
+            --    rail = "lasgun_pistol_rail_01", -- part of the base mod
+            --},
+            offset = {
+                position = vector3_box(0, -.07, .01),
+                rotation = vector3_box(0, 0, 0),
+                scale = vector3_box(1, 1, 1),
+                node = 1,
+            },
+        },
+    }
+})
+]]
 -- ##################
 -- Kitbash definition 
 -- ##################
