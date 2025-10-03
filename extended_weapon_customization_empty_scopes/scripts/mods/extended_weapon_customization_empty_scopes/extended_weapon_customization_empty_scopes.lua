@@ -228,6 +228,7 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             icon_render_camera_position_offset = icon_pos,
         }
     end
+    --[[
     if not extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle then
         extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle = {}
     end
@@ -248,11 +249,13 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             default_path = _item_empty_trinket,
         },
     })
-
+    ]]
     -- initialize fixes
     if not extended_weapon_customization_plugin.fixes[weapon_id] then
         extended_weapon_customization_plugin.fixes[weapon_id] = {}
     end
+
+    --[[
     table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
         attachment_slot = "sight",
         requirements = {
@@ -273,7 +276,10 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             --},
         },
     })
+    ]]
 end
+--[[
+-- kitbash definition
 for _, internal_name in ipairs(sight_reticles_to_add) do
     extended_weapon_customization_plugin.kitbashs[_item_ranged.."/sight_reticle/"..internal_name] = {
         attachments = {
@@ -295,7 +301,7 @@ for _, internal_name in ipairs(sight_reticles_to_add) do
         
     }
 end
-
+]]
 
 -- ##################
 -- Manual fixes for alignment
