@@ -547,6 +547,29 @@ create_alignments_for_sights(extended_weapon_customization_plugin.fixes.lasgun_p
 create_alignments_for_sights(extended_weapon_customization_plugin.fixes.lasgun_p3_m1, {
     position = vector3_box(0, 0.15, -0.0235),
 })
+--[[
+table_insert(extended_weapon_customization_plugin.fixes.lasgun_p3_m1, {
+    {
+        attachment_slot = "rail",
+        requirements = {
+            sight = {
+                has = empty_reflexes,
+            },
+        },
+        fix = {
+            attach = {
+                rail = "lasgun_rifle_rail_01", -- part of the base mod
+            },
+            offset = {
+                position = vector3_box(0, -0.07, 0.01),
+                rotation = vector3_box(0, 0, 0),
+                scale = vector3_box(1, 1, 1),
+                node = 1,
+            },
+        },
+    }
+})
+    ]]
 -- Laspistols don't need alignment
 create_alignments_for_sights(extended_weapon_customization_plugin.fixes.ogryn_heavystubber_p1_m1, {
     position = vector3_box(-0.28, -0.5, 0.18),
@@ -579,11 +602,11 @@ table_insert(extended_weapon_customization_plugin.fixes.stubrevolver_p1_m1, {
             },
         },
         fix = {
-            --attach = {
-            --    rail = "lasgun_pistol_rail_01", -- part of the base mod
-            --},
+            attach = {
+                rail = "lasgun_pistol_rail_01", -- part of the base mod
+            },
             offset = {
-                position = vector3_box(0, -.07, .01),
+                position = vector3_box(0, -0.07, 0.01),
                 rotation = vector3_box(0, 0, 0),
                 scale = vector3_box(1, 1, 1),
                 node = 1,
@@ -591,7 +614,7 @@ table_insert(extended_weapon_customization_plugin.fixes.stubrevolver_p1_m1, {
         },
     }
 })
-]]
+    ]]
 -- ##################
 -- Kitbash definition 
 -- ##################
