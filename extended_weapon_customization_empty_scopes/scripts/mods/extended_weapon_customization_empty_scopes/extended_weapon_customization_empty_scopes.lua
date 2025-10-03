@@ -217,6 +217,7 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
         extended_weapon_customization_plugin.attachments[weapon_id] = {}
     end
 
+    --[[
     if not extended_weapon_customization_plugin.attachments[weapon_id].sight then
         extended_weapon_customization_plugin.attachments[weapon_id].sight = {}
     end
@@ -228,7 +229,7 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             icon_render_camera_position_offset = icon_pos,
         }
     end
-    --[[
+    ]]
     if not extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle then
         extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle = {}
     end
@@ -249,13 +250,12 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             default_path = _item_empty_trinket,
         },
     })
-    ]]
+    
     -- initialize fixes
     if not extended_weapon_customization_plugin.fixes[weapon_id] then
         extended_weapon_customization_plugin.fixes[weapon_id] = {}
     end
 
-    --[[
     table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
         attachment_slot = "sight",
         requirements = {
@@ -269,16 +269,14 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
         fix = {
             disable_in_ui = false,
             hide = {
-                mesh = 1,
+                mesh = {1},
             },
             --offset = {
             --    position = vector3_box(0, 0.1, -0.01), -- forwards and down into the middle recess
             --},
         },
     })
-    ]]
 end
---[[
 -- kitbash definition
 for _, internal_name in ipairs(sight_reticles_to_add) do
     extended_weapon_customization_plugin.kitbashs[_item_ranged.."/sight_reticle/"..internal_name] = {
@@ -287,9 +285,6 @@ for _, internal_name in ipairs(sight_reticles_to_add) do
                 item = _item_empty_trinket,
                 fix = {
                     disable_in_ui = false,
-                    hide = {
-                        mesh = 1,
-                    },
                 },
                 children = {},
             },
@@ -301,8 +296,8 @@ for _, internal_name in ipairs(sight_reticles_to_add) do
         
     }
 end
-]]
 
+--[[
 -- ##################
 -- Manual fixes for alignment
 -- ##################
@@ -655,11 +650,9 @@ create_alignments_for_sights(extended_weapon_customization_plugin.fixes.ogryn_he
     rotation = vector3_box(-3.1, 0, -2.2),
 })
 -- Combat Shotguns don't need alignment
---[[
-create_alignments_for_sights(extended_weapon_customization_plugin.fixes.shotgun_p1_m1, {
-    position = vector3_box(0, 0, -0.0335),
-})
-]]
+--create_alignments_for_sights(extended_weapon_customization_plugin.fixes.shotgun_p1_m1, {
+--    position = vector3_box(0, 0, -0.0335),
+--})
 create_alignments_for_sights(extended_weapon_customization_plugin.fixes.shotgun_p4_m1, {
     position = vector3_box(-0.09, 0, 0.13),
     rotation = vector3_box(-6, 0, -5.5),
@@ -714,7 +707,7 @@ for i = 1, 3 do
         
     }
 end
-
+]]
 -- ################################
 -- Copying to Different Marks
 -- ################################
