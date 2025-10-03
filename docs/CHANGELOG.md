@@ -8,6 +8,12 @@
         - Spearhead Boltguns
         - Bolt Pistols
     - Used values from EWC
+- Fixed rails
+    - For:
+        - Recon Lasguns
+        - Quickdraw Stub Revolvers
+    - Resized to not let the bulges slip out
+    - Shifted sights around to fit, which needed offset realignment
 
 # 2025-10-01
 1.0.0
@@ -26,6 +32,6 @@
     - Heavy Stubbers
     - Combat Shotguns
     - Exterminator Shotguns
-    - Quickdraw Revolvers
+    - Quickdraw Stub Revolvers
 - Copied alignments from EWC and EWC_BA
 - Copied some helper functions from EWC_OwO
