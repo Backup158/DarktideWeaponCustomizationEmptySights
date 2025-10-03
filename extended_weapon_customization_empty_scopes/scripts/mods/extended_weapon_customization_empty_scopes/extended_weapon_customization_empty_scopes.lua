@@ -665,7 +665,7 @@ create_alignments_for_sights(extended_weapon_customization_plugin.fixes.shotgun_
     rotation = vector3_box(-6, 0, -5.5),
 })
 create_alignments_for_sights(extended_weapon_customization_plugin.fixes.stubrevolver_p1_m1, {
-    position = vector3_box(0.00, 0, -0.02),
+    position = vector3_box(0.00, 0, -0.031),
 })
 table_insert(extended_weapon_customization_plugin.fixes.stubrevolver_p1_m1, {
     attachment_slot = "rail",
