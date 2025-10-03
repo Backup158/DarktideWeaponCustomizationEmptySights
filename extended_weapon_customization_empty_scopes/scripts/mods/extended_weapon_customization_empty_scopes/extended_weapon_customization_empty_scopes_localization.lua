@@ -7,7 +7,7 @@ mod:add_global_localize_strings({
         en = "Empty Scopes/Sights",
     },
 	-- Slot Name
-	loc_sight_reticles = {
+	attachment_slot_sight_reticles = {
 		en = "Sight Reticles",
 	},
 })
