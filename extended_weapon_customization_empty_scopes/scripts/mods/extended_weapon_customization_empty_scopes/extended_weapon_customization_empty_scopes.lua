@@ -312,10 +312,10 @@ end
 for _, internal_name in ipairs(sight_reticles_to_add) do
     local replacement_name = _item_ranged.."/sight_reticles/"..internal_name
     extended_weapon_customization_plugin.kitbashs[replacement_name] = {
-        --[[
+        
         is_fallback_item = false,
         show_in_1p = true,
-        base_unit = _item_empty_trinket,
+        base_unit = "content/characters/empty_item/empty_item",
         item_list_faction = "Player",
         tags = {
         },
@@ -325,7 +325,7 @@ for _, internal_name in ipairs(sight_reticles_to_add) do
         },
         attach_node = "ap_sight_01",
         resource_dependencies = {
-            [_item_empty_trinket] = true,
+            ["content/characters/empty_item/empty_item"] = true,
         },
         attachments = {
             zzz_shared_material_overrides = {
@@ -339,8 +339,8 @@ for _, internal_name in ipairs(sight_reticles_to_add) do
         name = replacement_name,
         workflow_state = "RELEASABLE",
         is_full_item = true
-        ]]
-        --
+        
+        --[[
         attachments = {
             base = {
                 item = _item_ranged.."/stocks/shotgun_double_barrel_stock_ml01",
@@ -351,7 +351,7 @@ for _, internal_name in ipairs(sight_reticles_to_add) do
         description = "loc_description_"..internal_name,
         attach_node = "ap_sight_01",
         dev_name = internal_name,
-        
+        ]]
     }
 end
 
