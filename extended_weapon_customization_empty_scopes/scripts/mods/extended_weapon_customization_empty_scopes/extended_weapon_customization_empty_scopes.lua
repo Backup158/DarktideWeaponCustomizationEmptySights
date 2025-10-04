@@ -211,7 +211,7 @@ local weapons_to_add_to = { "autogun_p1_m1", "autogun_p2_m1", "autogun_p3_m1",
     "shotgun_p4_m1",
     "stubrevolver_p1_m1",
 }
-local sight_reticles_to_add = { "remove_reticle", "dummy_option", --"another_dummy_option", 
+local sight_reticles_to_add = { "remove_reticle", "remove_sight", --"another_dummy_option", 
 }
 for _, weapon_id in ipairs(weapons_to_add_to) do
     if not extended_weapon_customization_plugin.attachments[weapon_id] then
@@ -249,6 +249,16 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
         sight_reticles = {
             parent_slot = "sight",
             default_path = _item_empty_trinket,
+            --[[
+            fix = {
+                offset = {
+                    position = vector3_box(.04, .27, 0),
+                    rotation = vector3_box(0, 0, 0),
+                    scale = vector3_box(1, 1, 1),
+                    node = 1,
+                },
+            },
+            ]]
         },
     })
     
@@ -275,8 +285,26 @@ end
                 mesh = {1},
             },
             offset = {
-                position = vector3_box(0, 0.5, -0.1), -- forwards and down into the middle recess
+                position = vector3_box(0, 0.5, 0.2), -- just to see if it work
             },
+        },
+    })
+    table_insert(extended_weapon_customization_plugin.fixes, {
+        attachment_slot = "sight",
+        requirements = {
+            sight_reticles = {
+                has = "remove_sight",
+            },
+            sight = {
+                has = "reflex_sight_01|reflex_sight_02|reflex_sight_03",
+            },
+        },
+        fix = {
+            disable_in_ui = false,
+            hide = {
+                node = {1},
+            },
+            alpha = 1,
         },
     })
 
@@ -296,6 +324,9 @@ for _, internal_name in ipairs(sight_reticles_to_add) do
             "FEATURE_item_retained",
         },
         attach_node = "ap_sight_01",
+        resource_dependencies = {
+            [_item_empty_trinket] = true,
+        },
         attachments = {
             zzz_shared_material_overrides = {
                 item = "",
@@ -312,7 +343,7 @@ for _, internal_name in ipairs(sight_reticles_to_add) do
         --
         attachments = {
             base = {
-                item = _item_empty_trinket,
+                item = _item_ranged.."/stocks/shotgun_double_barrel_stock_ml01",
                 children = {},
             },
         },
