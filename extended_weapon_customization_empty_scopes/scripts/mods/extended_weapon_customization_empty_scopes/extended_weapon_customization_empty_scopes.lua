@@ -267,9 +267,7 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
         extended_weapon_customization_plugin.fixes[weapon_id] = {}
     end
 
-
-end
-    table_insert(extended_weapon_customization_plugin.fixes, {
+        table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
         attachment_slot = "sight_reticle",
         requirements = {
             sight_reticle = {
@@ -286,7 +284,7 @@ end
             },
         },
     })
-    table_insert(extended_weapon_customization_plugin.fixes, {
+    table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
         attachment_slot = "sight",
         requirements = {
             sight_reticle = {
@@ -306,7 +304,7 @@ end
             },
         },
     })
-    table_insert(extended_weapon_customization_plugin.fixes, {
+    table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
         attachment_slot = "sight",
         requirements = {
             sight_reticle = {
@@ -324,6 +322,8 @@ end
             alpha = 1,
         },
     })
+
+end
 
 -- kitbash definition
 for _, internal_name in ipairs(sight_reticles_to_add) do
