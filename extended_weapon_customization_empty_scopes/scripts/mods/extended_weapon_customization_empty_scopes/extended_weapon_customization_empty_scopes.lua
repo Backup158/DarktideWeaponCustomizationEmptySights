@@ -157,20 +157,19 @@ end
 function mod.create_alignments_for_sights(table_to_insert_into, vectors_table)
     for i = 1, 3 do
         table_insert(table_to_insert_into, {
-                attachment_slot = "sight_offset",
-                requirements = {
-                    sight = {
-                        has = "reflex_sight_0"..i.."_empty",
-                    },
+            attachment_slot = "sight_offset",
+            requirements = {
+                sight = {
+                    has = "reflex_sight_0"..i.."_empty",
                 },
-                fix = {
-                    offset = {
-                        position = vectors_table.position or vectors_table["position_for_"..i] or vector3_box(0, 0, 0),
-                        rotation = vectors_table.rotation or vectors_table["rotation_for_"..i] or vector3_box(0, 0, 0),
-                    },
+            },
+            fix = {
+                offset = {
+                    position = vectors_table.position or vectors_table["position_for_"..i] or vector3_box(0, 0, 0),
+                    rotation = vectors_table.rotation or vectors_table["rotation_for_"..i] or vector3_box(0, 0, 0),
                 },
-            }
-        ) 
+            },
+        }) 
     end
 end
 
