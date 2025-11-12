@@ -6,6 +6,7 @@ mod.version = "1.1.0"
 -- ##### ┴  └─┘┴└─└  └─┘┴└─┴ ┴┴ ┴┘└┘└─┘└─┘ ############################################################################
 -- local unit = Unit
 local pairs = pairs
+local ipairs = ipairs
 local type = type
 local table = table
 local vector3_box = Vector3Box
