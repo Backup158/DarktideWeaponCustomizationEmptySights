@@ -6,6 +6,10 @@ local string_sub = string.sub
 local table = table
 local table_insert = table.insert
 
+local _item = "content/items/weapons/player"
+local _item_ranged = _item.."/ranged"
+local _item_melee = _item.."/melee"
+local _item_empty_trinket = _item.."/trinkets/unused_trinket"
 local icon_rot = mod.icon_rot
 local icon_pos = mod.icon_pos
 
