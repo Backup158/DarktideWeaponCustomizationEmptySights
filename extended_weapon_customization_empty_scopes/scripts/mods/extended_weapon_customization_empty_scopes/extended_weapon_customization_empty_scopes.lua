@@ -91,6 +91,11 @@ local function copy_attachments_from_A_to_B(weapon_id_A, weapon_id_B)
     end
     table_merge_recursive(extended_weapon_customization_plugin.attachments[weapon_id_B], extended_weapon_customization_plugin.attachments[weapon_id_A])
 
+    -- If destination doesn't exist
+    if not extended_weapon_customization_plugin.attachment_slots[weapon_id_B] then
+        extended_weapon_customization_plugin.attachment_slots[weapon_id_B] = {}
+    end
+    table_merge_recursive(extended_weapon_customization_plugin.attachment_slots[weapon_id_B], extended_weapon_customization_plugin.attachment_slots[weapon_id_A])
 end
 
 local function copy_fixes_from_A_to_B(weapon_id_A, weapon_id_B)
@@ -211,7 +216,7 @@ local weapons_to_add_to = { "autogun_p1_m1", "autogun_p2_m1", "autogun_p3_m1",
     "shotgun_p4_m1",
     "stubrevolver_p1_m1",
 }
-local sight_reticles_to_add = { "remove_reticle", "remove_sight", --"another_dummy_option", 
+local sight_reticles_to_add = { "remove_reticle", "remove_sight", "another_dummy_option", "yet_another_dummy",
 }
 for _, weapon_id in ipairs(weapons_to_add_to) do
     if not extended_weapon_customization_plugin.attachments[weapon_id] then
@@ -239,39 +244,42 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             replacement_path = _item_ranged.."/sight_reticles/"..internal_name,
             icon_render_unit_rotation_offset = icon_rot,
             icon_render_camera_position_offset = icon_pos,
+            custom_selection_group = "empty_scopes"
         }
     end
 
     if not extended_weapon_customization_plugin.attachment_slots[weapon_id] then
         extended_weapon_customization_plugin.attachment_slots[weapon_id] = {}
     end
-    table_insert(extended_weapon_customization_plugin.attachment_slots[weapon_id], {
-        sight_reticle = {
-            parent_slot = "receiver",
-            default_path = _item_empty_trinket,
-            
-            fix = {
-                offset = {
-                    node = 1,
-                    position = vector3_box(.04, .27, 0),
-                    rotation = vector3_box(0, 0, 0),
-                    scale = vector3_box(1, 1, 1),
-                },
+    extended_weapon_customization_plugin.attachment_slots[weapon_id].sight_reticle = {
+        parent_slot = "sight",
+        default_path = _item_empty_trinket,
+        fix = {
+            --[[
+            offset = {
+                node = 1,
+                position = vector3_box(.04, .27, 0),
+                rotation = vector3_box(0, 0, 0),
+                scale = vector3_box(1, 1, 1),
             },
-            
+            ]]
+            hide = {
+                mesh = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},
+            },
         },
-    })
+        
+    }
     
     -- initialize fixes
     if not extended_weapon_customization_plugin.fixes[weapon_id] then
         extended_weapon_customization_plugin.fixes[weapon_id] = {}
     end
-
-        table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
+    --[[
+    table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
         attachment_slot = "sight_reticle",
         requirements = {
             sight_reticle = {
-                has = "remove_reticle",
+                has = "remove_reticle|remove_sight",
             },
         },
         fix = {
@@ -282,26 +290,33 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
                 rotation = vector3_box(0, 0, 0),
                 scale = vector3_box(1, 1, 1)
             },
+            --hide = {
+            --    mesh = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}
+            --}
         },
     })
+    ]]
+    
     table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
         attachment_slot = "sight",
         requirements = {
             sight_reticle = {
                 has = "remove_reticle",
             },
-            sight = {
-                has = "reflex_sight_01|reflex_sight_02|reflex_sight_03",
-            },
+            --sight = {
+            --    has = "reflex_sight_01|reflex_sight_02|reflex_sight_03",
+            --},
         },
         fix = {
             disable_in_ui = false,
             hide = {
                 mesh = {1},
             },
+            --[[
             offset = {
                 position = vector3_box(0, 0.5, 0.2), -- just to see if it work
             },
+            ]]
         },
     })
     table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
@@ -310,9 +325,9 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
             sight_reticle = {
                 has = "remove_sight",
             },
-            sight = {
-                has = "reflex_sight_01|reflex_sight_02|reflex_sight_03",
-            },
+            --sight = {
+            --    has = "reflex_sight_01|reflex_sight_02|reflex_sight_03",
+            --},
         },
         fix = {
             disable_in_ui = false,
@@ -326,11 +341,12 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
 end
 
 -- kitbash definition
-for _, internal_name in ipairs(sight_reticles_to_add) do
+for key, internal_name in ipairs(sight_reticles_to_add) do
     local replacement_name = _item_ranged.."/sight_reticles/"..internal_name
     --local base_unit_path = "content/characters/empty_item/empty_item"
     --local base_unit_path = "content/items/weapons/player/ranged/stocks/autogun_rifle_stock_02"
-    local base_unit_path = "content/weapons/player/melee/chain_sword/attachments/body_06/body_06"
+    --local base_unit_path = "content/weapons/player/melee/chain_sword/attachments/body_06/body_06"
+    local base_unit_path = "content/weapons/player/melee/chain_sword/attachments/body_0"..key.."/body_0"..key
     extended_weapon_customization_plugin.kitbashs[replacement_name] = {
         
         is_fallback_item = false,
