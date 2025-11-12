@@ -20,15 +20,13 @@ local infantry_autogun_receivers = "autogun_rifle_receiver_01|autogun_rifle_rece
 local vigilant_autogun_receivers = "autogun_rifle_killshot_receiver_01|autogun_rifle_killshot_receiver_02|autogun_rifle_killshot_receiver_03|autogun_rifle_killshot_receiver_04|autogun_rifle_killshot_receiver_ml01"
 local braced_autogun_receivers = "autogun_rifle_ak_receiver_01|autogun_rifle_ak_receiver_02|autogun_rifle_ak_receiver_03|autogun_rifle_ak_receiver_ml01"
 
-local custom_fixes = {}
-
 local attachment_blob = {
     attachments = { sight = {}, }, -- filled out below
     -- attachment_slots = {},
     fixes = {
 
     },
-    manual_fixes = custom_fixes,
+    manual_fixes = {},
     kitbashs = {
 
     },
@@ -68,12 +66,13 @@ for i = 1, 3 do
     empty_reflexes = empty_reflexes..internal_name.."|"
 end
 
-empty_reflexes = empty_reflexes
+empty_reflexes = string_sub(empty_reflexes, 1, -2)
 
 -- ##################
 -- Manual fixes for alignment
 -- ##################
-custom_fixes.autogun_p1_m1 = {
+-- Autoguns
+attachment_blob.manual_fixes.autogun_p1_m1 = {
     {
         attachment_slot = "sight_offset",
         requirements = {
@@ -135,7 +134,7 @@ custom_fixes.autogun_p1_m1 = {
         },
     },
 }
-custom_fixes.autogun_p2_m1 = {
+attachment_blob.manual_fixes.autogun_p2_m1 = {
     {
         attachment_slot = "sight_offset",
         requirements = {
@@ -230,7 +229,7 @@ custom_fixes.autogun_p2_m1 = {
         },
     },
 }
-custom_fixes.autogun_p3_m1 = {
+attachment_blob.manual_fixes.autogun_p3_m1 = {
     {
         attachment_slot = "sight_offset",
         requirements = {
@@ -324,14 +323,18 @@ custom_fixes.autogun_p3_m1 = {
         },
     },
 }
-create_alignments_for_sights(custom_fixes.autopistol_p1_m1, {
+-- Autopistol
+attachment_blob.manual_fixes.autopistol_p1_m1 = {}
+create_alignments_for_sights(attachment_blob.manual_fixes.autopistol_p1_m1, {
     position = vector3_box(-0.045, -0.05, 0.1175),
     rotation = vector3_box(-2, 10, -2),
 })
-create_alignments_for_sights(custom_fixes.bolter_p1_m1, {
+-- Bolter
+attachment_blob.manual_fixes.bolter_p1_m1 = {}
+create_alignments_for_sights(attachment_blob.manual_fixes.bolter_p1_m1, {
     position = vector3_box(0, 0, -0.0095),
 })
-table_insert(custom_fixes.bolter_p1_m1, 
+table_insert(attachment_blob.manual_fixes.bolter_p1_m1, 
     {   
         attachment_slot = "sight",
         requirements = {
@@ -346,10 +349,12 @@ table_insert(custom_fixes.bolter_p1_m1,
         },
     }
 )
-create_alignments_for_sights(custom_fixes.boltpistol_p1_m1, {
+-- Bolt Pistol
+attachment_blob.manual_fixes.boltpistol_p1_m1 = {}
+create_alignments_for_sights(attachment_blob.manual_fixes.boltpistol_p1_m1, {
     position = vector3_box(0, 0, -0.0095),
 })
-table_insert(custom_fixes.boltpistol_p1_m1, 
+table_insert(attachment_blob.manual_fixes.boltpistol_p1_m1, 
     {   
         attachment_slot = "sight",
         requirements = {
@@ -365,15 +370,17 @@ table_insert(custom_fixes.boltpistol_p1_m1,
     }
 )
 -- Infantry Lasguns don't need alignment
-create_alignments_for_sights(custom_fixes.lasgun_p2_m1, {
+attachment_blob.manual_fixes.lasgun_p2_m1 = {}
+create_alignments_for_sights(attachment_blob.manual_fixes.lasgun_p2_m1, {
     position_for_1 = vector3_box(0, 0, -0.0235),
     position_for_2 = vector3_box(0, 0, -0.022),
     position_for_3 = vector3_box(0, 0, -0.022),
 })
-create_alignments_for_sights(custom_fixes.lasgun_p3_m1, {
+attachment_blob.manual_fixes.lasgun_p3_m1 = {}
+create_alignments_for_sights(attachment_blob.manual_fixes.lasgun_p3_m1, {
     position = vector3_box(0, 0.15, -0.03),
 })
-table_insert(custom_fixes.lasgun_p3_m1, {
+table_insert(attachment_blob.manual_fixes.lasgun_p3_m1, {
     attachment_slot = "sight",
     requirements = {
         sight = {
@@ -387,8 +394,8 @@ table_insert(custom_fixes.lasgun_p3_m1, {
         },
     },
 })
--- Resizing rail to not bulge out (owo)
-table_insert(custom_fixes.lasgun_p3_m1, {
+--  Resizing rail to not bulge out (owo)
+table_insert(attachment_blob.manual_fixes.lasgun_p3_m1, {
     attachment_slot = "rail",
     requirements = {
         sight = {
@@ -408,26 +415,31 @@ table_insert(custom_fixes.lasgun_p3_m1, {
     },
 })
 -- Laspistols don't need alignment
-create_alignments_for_sights(custom_fixes.ogryn_heavystubber_p1_m1, {
+attachment_blob.manual_fixes.ogryn_heavystubber_p1_m1 = {}
+create_alignments_for_sights(attachment_blob.manual_fixes.ogryn_heavystubber_p1_m1, {
     position = vector3_box(-0.28, -0.5, 0.18),
     rotation = vector3_box(-2.4, 0, -1.4),
 })
-create_alignments_for_sights(custom_fixes.ogryn_heavystubber_p2_m1, {
+attachment_blob.manual_fixes.ogryn_heavystubber_p2_m1 = {}
+create_alignments_for_sights(attachment_blob.manual_fixes.ogryn_heavystubber_p2_m1, {
     position = vector3_box(0.06, -0.25, 0.25),
     rotation = vector3_box(-3.1, 0, -2.2),
 })
 -- Combat Shotguns don't need alignment
---create_alignments_for_sights(custom_fixes.shotgun_p1_m1, {
+--attachment_blob.manual_fixes.shotgun_p1_m1 = {}
+--create_alignments_for_sights(attachment_blob.manual_fixes.shotgun_p1_m1, {
 --    position = vector3_box(0, 0, -0.0335),
 --})
-create_alignments_for_sights(custom_fixes.shotgun_p4_m1, {
+attachment_blob.manual_fixes.shotgun_p4_m1 = {}
+create_alignments_for_sights(attachment_blob.manual_fixes.shotgun_p4_m1, {
     position = vector3_box(-0.09, 0, 0.13),
     rotation = vector3_box(-6, 0, -5.5),
 })
-create_alignments_for_sights(custom_fixes.stubrevolver_p1_m1, {
+attachment_blob.manual_fixes.stubrevolver_p1_m1 = {}
+create_alignments_for_sights(attachment_blob.manual_fixes.stubrevolver_p1_m1, {
     position = vector3_box(0.00, 0, -0.031),
 })
-table_insert(custom_fixes.stubrevolver_p1_m1, {
+table_insert(attachment_blob.manual_fixes.stubrevolver_p1_m1, {
     attachment_slot = "rail",
     requirements = {
         sight = {
