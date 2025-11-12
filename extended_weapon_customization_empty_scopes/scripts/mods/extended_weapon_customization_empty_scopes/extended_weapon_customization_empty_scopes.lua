@@ -238,6 +238,14 @@ local function merge_attachment_from_file_to_weapon(table_to_insert_into, weapon
             table_insert(table_to_insert_into.fixes[weapon_id], fix)
         end
     end
+    if attachment_blob.manual_fixes and attachment_blob.manual_fixes[weapon_id] then
+        if not table_to_insert_into.fixes[weapon_id] then
+            table_to_insert_into.fixes[weapon_id] = {}
+        end
+        for _, fix in ipairs(attachment_blob.manual_fixes[weapon_id]) do
+            table_insert(table_to_insert_into.fixes[weapon_id], fix)
+        end
+    end
 
     -- Kitbashs
     for kitbash_name, kitbash_data in pairs(attachment_blob.kitbashs) do
