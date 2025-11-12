@@ -31,7 +31,7 @@ local attachment_blob = {
 }
 for i = 1, 3 do
     -- Attachments
-    attachment_blob.attachments[weapon_id].sight["reflex_sight_0"..i.."_empty"] = {
+    attachment_blob.attachments.sight["reflex_sight_0"..i.."_empty"] = {
         replacement_path = _item_ranged.."/sights/reflex_sight_0"..i.."_empty",
         icon_render_unit_rotation_offset = icon_rot,
         icon_render_camera_position_offset = icon_pos,
