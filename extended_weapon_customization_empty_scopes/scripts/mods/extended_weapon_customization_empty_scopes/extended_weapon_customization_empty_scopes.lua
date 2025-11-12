@@ -1,5 +1,5 @@
 local mod = get_mod("extended_weapon_customization_empty_scopes")
-mod.version = "1.0.0"
+mod.version = "1.1.0"
 
 -- ##### ┌─┐┌─┐┬─┐┌─┐┌─┐┬─┐┌┬┐┌─┐┌┐┌┌─┐┌─┐ ############################################################################
 -- ##### ├─┘├┤ ├┬┘├┤ │ │├┬┘│││├─┤││││  ├┤  ############################################################################
@@ -69,6 +69,17 @@ local function string_is_key_in_table(string_to_find, table_to_search)
         end
         return false
     end
+end
+
+-- ######
+-- Load Mod File
+-- DESCRIPTION: Runs a file in the mod's folder
+-- PARAMETERS:
+--  relative_path: string; path to the file without the extension; e.g. "melee/autogun_gooning"
+-- RETURN: N/A
+-- ######
+local function load_mod_file(relative_path)
+	return mod:io_dofile("extended_weapon_customization_empty_scopes/scripts/mods/extended_weapon_customization_empty_scopes/"..relative_path)
 end
 
 -- ######
@@ -196,15 +207,50 @@ local function create_alignments_for_sights(table_to_insert_into, vectors_table)
     ) 
 end
 
+local function merge_attachment_from_file_to_weapon(table_to_insert_into, weapon_id, slot_to_use, attachment_blob)
+    -- Attachments
+    if not table_to_insert_into.attachments[weapon_id] then
+        table_to_insert_into.attachments[weapon_id] = {}
+    end
+    if not table_to_insert_into.attachments[weapon_id][slot_to_use] then
+        table_to_insert_into.attachments[weapon_id][slot_to_use] = {}
+    end
+    table_merge_recursive(table_to_insert_into.attachments[weapon_id], attachment_blob.attachments)
+
+    -- Attachment Slots
+    if attachment_blob.attachment_slots then
+        if not table_to_insert_into.attachment_slots[weapon_id] then
+            table_to_insert_into.attachment_slots[weapon_id] = {}
+        end
+        table_merge_recursive(table_to_insert_into.attachment_slots[weapon_id], attachment_blob.attachment_slots)
+    end
+
+    -- Fixes
+    if attachment_blob.fixes then
+        if not table_to_insert_into.fixes[weapon_id] then
+            table_to_insert_into.fixes[weapon_id] = {}
+        end
+        for _, fix in ipairs(attachment_blob.fixes) do
+            table_insert(table_to_insert_into.fixes[weapon_id], fix)
+        end
+    end
+
+    -- Kitbashs
+    for kitbash_name, kitbash_data in pairs(attachment_blob.kitbashs) do
+        if not attachment_blob.kitbashs[kitbash_name] then
+            attachment_blob.kitbashs[kitbash_name] = kitbash_data
+        end
+    end
+end
+
 -- ####################################################################################################################
 -- #####  Adding Attachments   ########################################################################################
 -- ####################################################################################################################
-
--- ##################
+-- ################################
 -- Create Attachment for selection
--- ##################
-local icon_rot = {90, 0, -95}
-local icon_pos = {.035, -0.1, .175}
+-- ################################
+mod.icon_rot = {90, 0, -95}
+mod.icon_pos = {.035, -0.1, .175}
 
 local weapons_to_add_to = { "autogun_p1_m1", "autogun_p2_m1", "autogun_p3_m1", 
     "autopistol_p1_m1", 
@@ -216,180 +262,11 @@ local weapons_to_add_to = { "autogun_p1_m1", "autogun_p2_m1", "autogun_p3_m1",
     "shotgun_p4_m1",
     "stubrevolver_p1_m1",
 }
-local sight_reticles_to_add = { "remove_reticle", "remove_sight", "another_dummy_option", "yet_another_dummy",
+mod.sight_reticles_to_add = { "remove_reticle", "remove_sight", --"another_dummy_option", "yet_another_dummy",
 }
 for _, weapon_id in ipairs(weapons_to_add_to) do
-    if not extended_weapon_customization_plugin.attachments[weapon_id] then
-        extended_weapon_customization_plugin.attachments[weapon_id] = {}
-    end
-
-    --[[
-    if not extended_weapon_customization_plugin.attachments[weapon_id].sight then
-        extended_weapon_customization_plugin.attachments[weapon_id].sight = {}
-    end
-
-    for i = 1, 3 do
-        extended_weapon_customization_plugin.attachments[weapon_id].sight["reflex_sight_0"..i.."_empty"] = {
-            replacement_path = _item_ranged.."/sights/reflex_sight_0"..i.."_empty",
-            icon_render_unit_rotation_offset = icon_rot,
-            icon_render_camera_position_offset = icon_pos,
-        }
-    end
-    ]]
-    if not extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle then
-        extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle = {}
-    end
-    for _, internal_name in ipairs(sight_reticles_to_add) do
-        extended_weapon_customization_plugin.attachments[weapon_id].sight_reticle[internal_name] = {
-            replacement_path = _item_ranged.."/sight_reticles/"..internal_name,
-            icon_render_unit_rotation_offset = icon_rot,
-            icon_render_camera_position_offset = icon_pos,
-            custom_selection_group = "empty_scopes"
-        }
-    end
-
-    if not extended_weapon_customization_plugin.attachment_slots[weapon_id] then
-        extended_weapon_customization_plugin.attachment_slots[weapon_id] = {}
-    end
-    extended_weapon_customization_plugin.attachment_slots[weapon_id].sight_reticle = {
-        parent_slot = "sight",
-        default_path = _item_empty_trinket,
-        fix = {
-            --[[
-            offset = {
-                node = 1,
-                position = vector3_box(.04, .27, 0),
-                rotation = vector3_box(0, 0, 0),
-                scale = vector3_box(1, 1, 1),
-            },
-            ]]
-            hide = {
-                mesh = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},
-            },
-        },
-        
-    }
-    
-    -- initialize fixes
-    if not extended_weapon_customization_plugin.fixes[weapon_id] then
-        extended_weapon_customization_plugin.fixes[weapon_id] = {}
-    end
-    --[[
-    table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
-        attachment_slot = "sight_reticle",
-        requirements = {
-            sight_reticle = {
-                has = "remove_reticle|remove_sight",
-            },
-        },
-        fix = {
-            disable_in_ui = false,
-            offset = {
-                node = 1,
-                position = vector3_box(0, 0.5, 0.2), -- just to see if it work
-                rotation = vector3_box(0, 0, 0),
-                scale = vector3_box(1, 1, 1)
-            },
-            --hide = {
-            --    mesh = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}
-            --}
-        },
-    })
-    ]]
-    
-    table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
-        attachment_slot = "sight",
-        requirements = {
-            sight_reticle = {
-                has = "remove_reticle",
-            },
-            --sight = {
-            --    has = "reflex_sight_01|reflex_sight_02|reflex_sight_03",
-            --},
-        },
-        fix = {
-            disable_in_ui = false,
-            hide = {
-                mesh = {1},
-            },
-            --[[
-            offset = {
-                position = vector3_box(0, 0.5, 0.2), -- just to see if it work
-            },
-            ]]
-        },
-    })
-    table_insert(extended_weapon_customization_plugin.fixes[weapon_id], {
-        attachment_slot = "sight",
-        requirements = {
-            sight_reticle = {
-                has = "remove_sight",
-            },
-            --sight = {
-            --    has = "reflex_sight_01|reflex_sight_02|reflex_sight_03",
-            --},
-        },
-        fix = {
-            disable_in_ui = false,
-            hide = {
-                node = {1},
-            },
-            alpha = 1,
-        },
-    })
-
-end
-
--- kitbash definition
-for key, internal_name in ipairs(sight_reticles_to_add) do
-    local replacement_name = _item_ranged.."/sight_reticles/"..internal_name
-    --local base_unit_path = "content/characters/empty_item/empty_item"
-    --local base_unit_path = "content/items/weapons/player/ranged/stocks/autogun_rifle_stock_02"
-    --local base_unit_path = "content/weapons/player/melee/chain_sword/attachments/body_06/body_06"
-    local base_unit_path = "content/weapons/player/melee/chain_sword/attachments/body_0"..key.."/body_0"..key
-    extended_weapon_customization_plugin.kitbashs[replacement_name] = {
-        
-        is_fallback_item = false,
-        show_in_1p = true,
-        base_unit = base_unit_path,
-        item_list_faction = "Player",
-        tags = {
-        },
-        only_show_in_1p = false,
-        feature_flags = {
-            "FEATURE_item_retained",
-        },
-        attach_node = "ap_sight_01",
-        resource_dependencies = {
-            [base_unit_path] = true,
-        },
-        attachments = {
-            zzz_shared_material_overrides = {
-                item = "",
-                children = {},
-            },
-        },
-        workflow_checklist = {
-        },
-        --display_name = "loc_"..internal_name,
-        display_name = "n/a",
-        name = replacement_name,
-        workflow_state = "RELEASABLE",
-        is_full_item = true
-        
-        --[[
-        attachments = {
-            base = {
-                item = _item_ranged.."/stocks/shotgun_double_barrel_stock_ml01",
-                children = {},
-            },
-        },
-        display_name = "loc_"..internal_name,
-        description = "loc_description_"..internal_name,
-        attach_node = "ap_sight_01",
-        dev_name = internal_name,
-        ]]
-    }
+    merge_attachment_from_file_to_weapon(extended_weapon_customization_plugin, weapon_id, "sight", load_mod_file("attachments/empty_scopes"))
+    merge_attachment_from_file_to_weapon(extended_weapon_customization_plugin, weapon_id, "sight_reticle", load_mod_file("attachments/reticle_remover"))
 end
 
 --[[
@@ -831,7 +708,9 @@ end
 
 mod.extended_weapon_customization_plugin = extended_weapon_customization_plugin
 
-table.dump(mod.extended_weapon_customization_plugin, "big sweaty black men", 12)
+if mod:get("debug_mode") then
+    table.dump(mod.extended_weapon_customization_plugin, "big sweaty black men", 12)
+end
 
 -- ####################################################################################################################
 -- #####  Hooks   #####################################################################################################
