@@ -4,7 +4,7 @@ local icon_rot = mod.icon_rot
 local icon_pos = mod.icon_pos
 
 local attachment_blob = {
-    attachments = {}, -- filled out below
+    attachments = { sight = {}, }, -- filled out below
     -- attachment_slots = {},
     fixes = {
 
