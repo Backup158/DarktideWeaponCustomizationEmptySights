@@ -20,12 +20,6 @@ local string_gsub = string.gsub
 -- ##### ┌┬┐┌─┐┌┬┐┌─┐ #################################################################################################
 -- #####  ││├─┤ │ ├─┤ #################################################################################################
 -- ##### ─┴┘┴ ┴ ┴ ┴ ┴ #################################################################################################
-
-local _item = "content/items/weapons/player"
-local _item_ranged = _item.."/ranged"
-local _item_melee = _item.."/melee"
-local _item_empty_trinket = _item.."/trinkets/unused_trinket"
-
 -- List of weapons from game code
 local WeaponTemplates = require("scripts/settings/equipment/weapon_templates/weapon_templates")
 
@@ -161,51 +155,23 @@ end
 -- RETURN: N/A
 -- ######
 function mod.create_alignments_for_sights(table_to_insert_into, vectors_table)
-    table_insert(table_to_insert_into, {
-            attachment_slot = "sight_offset",
-            requirements = {
-                sight = {
-                    has = "reflex_sight_01_empty",
+    for i = 1, 3 do
+        table_insert(table_to_insert_into, {
+                attachment_slot = "sight_offset",
+                requirements = {
+                    sight = {
+                        has = "reflex_sight_0"..i.."_empty",
+                    },
                 },
-            },
-            fix = {
-                offset = {
-                    position = vectors_table.position or vectors_table.position_for_1 or vector3_box(0, 0, 0),
-                    rotation = vectors_table.rotation or vectors_table.rotation_for_1 or vector3_box(0, 0, 0),
+                fix = {
+                    offset = {
+                        position = vectors_table.position or vectors_table["position_for_"..i] or vector3_box(0, 0, 0),
+                        rotation = vectors_table.rotation or vectors_table["rotation_for_"..i] or vector3_box(0, 0, 0),
+                    },
                 },
-            },
-        }
-    ) 
-    table_insert(table_to_insert_into, {
-            attachment_slot = "sight_offset",
-            requirements = {
-                sight = {
-                    has = "reflex_sight_02_empty",
-                },
-            },
-            fix = {
-                offset = {
-                    position = vectors_table.position or vectors_table.position_for_2 or vector3_box(0, 0, 0),
-                    rotation = vectors_table.rotation or vectors_table.rotation_for_2 or vector3_box(0, 0, 0),
-                },
-            },
-        }
-    ) 
-    table_insert(table_to_insert_into, {
-            attachment_slot = "sight_offset",
-            requirements = {
-                sight = {
-                    has = "reflex_sight_03_empty",
-                },
-            },
-            fix = {
-                offset = {
-                    position = vectors_table.position or vectors_table.position_for_3 or vector3_box(0, 0, 0),
-                    rotation = vectors_table.rotation or vectors_table.rotation_for_3 or vector3_box(0, 0, 0),
-                },
-            },
-        }
-    ) 
+            }
+        ) 
+    end
 end
 
 -- ######
