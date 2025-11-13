@@ -10,7 +10,21 @@ mod:add_global_localize_strings({
 	attachment_slot_sight_reticle = {
 		en = "Sight Reticles",
 	},
+	-- Attachments
+	loc_ewc_remove_reticle = {
+		en = "Remove Reticle",
+	},
+	loc_ewc_remove_sight = {
+		en = "Remove Entire Sight",
+	},
 })
+for i = 1, 3 do
+	mod:add_global_localize_strings({
+		["reflex_sight_0"..i.."_empty"] = {
+			en = "Empty Reflex Sight "..i,
+		},
+	})
+end
 
 return {
 	mod_description = {
