@@ -10,6 +10,9 @@ mod:add_global_localize_strings({
 	attachment_slot_sight_reticle = {
 		en = "Sight Reticles",
 	},
+	loc_ewc_empty_scopes = {
+		en = "Empty Scopes/Sights"
+	},
 	-- Attachments
 	loc_ewc_remove_reticle = {
 		en = "Remove Reticle",
