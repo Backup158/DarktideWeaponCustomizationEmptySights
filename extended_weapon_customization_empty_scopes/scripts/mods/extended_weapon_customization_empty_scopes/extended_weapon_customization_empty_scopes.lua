@@ -86,17 +86,19 @@ end
 -- RETURN: N/A
 -- ######
 local function copy_attachments_from_A_to_B(weapon_id_A, weapon_id_B)
-    -- If source does not exist
+    -- Attachments
+    --  If source does not exist
     if not extended_weapon_customization_plugin.attachments[weapon_id_A] then
         mod:error("No attachments found for source: "..weapon_id_A)
         return
     end
-    -- If destination doesn't exist
+    --  If destination doesn't exist
     if not extended_weapon_customization_plugin.attachments[weapon_id_B] then
         extended_weapon_customization_plugin.attachments[weapon_id_B] = {}
     end
     table_merge_recursive(extended_weapon_customization_plugin.attachments[weapon_id_B], extended_weapon_customization_plugin.attachments[weapon_id_A])
 
+    -- Attachment Slots
     -- If destination doesn't exist
     if not extended_weapon_customization_plugin.attachment_slots[weapon_id_B] then
         extended_weapon_customization_plugin.attachment_slots[weapon_id_B] = {}
