@@ -7,7 +7,8 @@ local _item_empty_trinket = _item.."/trinkets/unused_trinket"
 local icon_rot = mod.icon_rot
 local icon_pos = mod.icon_pos
 
-local sight_reticles_to_add = mod.sight_reticles_to_add
+local sight_reticles_to_add = { "remove_reticle", "remove_sight", --"another_dummy_option", "yet_another_dummy",
+}
 
 local attachment_blob = {
     attachments = { sight_reticle = {}, }, -- filled out below

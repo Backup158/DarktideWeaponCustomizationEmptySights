@@ -224,6 +224,9 @@ end
 -- ####################################################################################################################
 -- #####  Adding Attachments   ########################################################################################
 -- ####################################################################################################################
+local empty_scopes = load_mod_file("attachments/empty_scopes")
+local reticle_removers = load_mod_file("attachments/reticle_remover")
+
 -- ################################
 -- Create Attachment for selection
 -- ################################
@@ -240,11 +243,9 @@ local weapons_to_add_to = { "autogun_p1_m1", "autogun_p2_m1", "autogun_p3_m1",
     "shotgun_p4_m1",
     "stubrevolver_p1_m1",
 }
-mod.sight_reticles_to_add = { "remove_reticle", "remove_sight", --"another_dummy_option", "yet_another_dummy",
-}
 for _, weapon_id in ipairs(weapons_to_add_to) do
-    merge_attachment_from_file_to_weapon(extended_weapon_customization_plugin, weapon_id, "sight", load_mod_file("attachments/empty_scopes"))
-    merge_attachment_from_file_to_weapon(extended_weapon_customization_plugin, weapon_id, "sight_reticle", load_mod_file("attachments/reticle_remover"))
+    merge_attachment_from_file_to_weapon(extended_weapon_customization_plugin, weapon_id, "sight", empty_scopes)
+    merge_attachment_from_file_to_weapon(extended_weapon_customization_plugin, weapon_id, "sight_reticle", reticle_removers)
 end
 
 -- ################################
