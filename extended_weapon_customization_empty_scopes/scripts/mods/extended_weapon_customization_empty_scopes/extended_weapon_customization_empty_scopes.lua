@@ -185,7 +185,8 @@ local function merge_attachment_from_file_to_weapon(table_to_insert_into, weapon
     if not table_to_insert_into.attachments[weapon_id][slot_to_use] then
         table_to_insert_into.attachments[weapon_id][slot_to_use] = {}
     end
-    table_merge_recursive(table_to_insert_into.attachments[weapon_id], attachment_blob.attachments)
+    local these_attachments = table_clone(attachment_blob.attachments)
+    table_merge_recursive(table_to_insert_into.attachments[weapon_id], these_attachments)
 
     -- Attachment Slots
     if attachment_blob.attachment_slots then
@@ -215,8 +216,8 @@ local function merge_attachment_from_file_to_weapon(table_to_insert_into, weapon
 
     -- Kitbashs
     for kitbash_name, kitbash_data in pairs(attachment_blob.kitbashs) do
-        if not attachment_blob.kitbashs[kitbash_name] then
-            attachment_blob.kitbashs[kitbash_name] = kitbash_data
+        if not table_to_insert_into.kitbashs[kitbash_name] then
+            table_to_insert_into.kitbashs[kitbash_name] = kitbash_data
         end
     end
 end
@@ -247,6 +248,12 @@ for _, weapon_id in ipairs(weapons_to_add_to) do
     merge_attachment_from_file_to_weapon(extended_weapon_customization_plugin, weapon_id, "sight", empty_scopes)
     merge_attachment_from_file_to_weapon(extended_weapon_customization_plugin, weapon_id, "sight_reticle", reticle_removers)
 end
+
+-- ################
+-- Manual Fixes
+-- ################
+extended_weapon_customization_plugin.attachments.shotgun_p1_m1.sight_2 = table_clone(extended_weapon_customization_plugin.attachments.shotgun_p1_m1.sight)
+extended_weapon_customization_plugin.attachments.shotgun_p1_m1.sight = nil
 
 -- ################################
 -- Copying to Different Marks
