@@ -23,7 +23,7 @@ mod:add_global_localize_strings({
 })
 for i = 1, 3 do
 	mod:add_global_localize_strings({
-		["reflex_sight_0"..i.."_empty"] = {
+		["loc_reflex_sight_0"..i.."_empty"] = {
 			en = "Empty Reflex Sight "..i,
 		},
 	})
