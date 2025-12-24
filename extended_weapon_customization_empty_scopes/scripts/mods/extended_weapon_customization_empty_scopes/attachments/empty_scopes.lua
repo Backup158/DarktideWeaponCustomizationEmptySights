@@ -32,19 +32,50 @@ local attachment_blob = {
     },
 }
 for i = 1, 3 do
+    --local base_item_path = _item_ranged.."/sights/reflex_sight_0"..i
+    local base_unit_path = "content/weapons/player/attachments/sights/sight_reflex_0"..i.."/sight_reflex_0"..i
+    local internal_name = "reflex_sight_0"..i.."_empty"
+    local this_replacement_path = _item_ranged.."/sights/"..internal_name
+
     -- Attachments
-    attachment_blob.attachments.sight["reflex_sight_0"..i.."_empty"] = {
-        replacement_path = _item_ranged.."/sights/reflex_sight_0"..i.."_empty",
+    attachment_blob.attachments.sight[internal_name] = {
+        replacement_path = this_replacement_path,
         icon_render_unit_rotation_offset = icon_rot,
         icon_render_camera_position_offset = icon_pos,
         custom_selection_group = "empty_scopes"
     }
 
     -- Kitbashes
-    local base_item_path = _item_ranged.."/sights/reflex_sight_0"..i
-    local internal_name = "reflex_sight_0"..i.."_empty"
-    local replacement_path = _item_ranged.."/sights/"..internal_name
-    attachment_blob.kitbashs[replacement_path] = {
+    attachment_blob.kitbashs[this_replacement_path] = {
+        --[
+        is_fallback_item = false,
+        show_in_1p = true,
+        base_unit = base_unit_path,
+        item_list_faction = "Player",
+        tags = {
+        },
+        only_show_in_1p = false,
+        feature_flags = {
+            "FEATURE_item_retained",
+        },
+        attach_node = "ap_sight_01",
+        resource_dependencies = {
+            [base_unit_path] = true,
+        },
+        attachments = {
+            zzz_shared_material_overrides = {
+                item = "",
+                children = {},
+            },
+        },
+        workflow_checklist = {
+        },
+        display_name = "n/a",
+        name = internal_name,
+        workflow_state = "RELEASABLE",
+        is_full_item = true,
+        --]]
+        --[[
         attachments = {
             base = {
                 item = base_item_path,
@@ -61,12 +92,14 @@ for i = 1, 3 do
         description = "loc_description_"..internal_name,
         attach_node = "ap_sight_01",
         dev_name = internal_name,
+        --]]
     }
 
     empty_reflexes = empty_reflexes..internal_name.."|"
 end
 
 empty_reflexes = string_sub(empty_reflexes, 1, -2)
+--mod:echo(empty_reflexes)
 
 -- ##################
 -- Manual fixes for alignment
